@@ -16,19 +16,20 @@
 
 package uk.gov.hmrc.developeremailrenderer.config
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import play.api.i18n.{ I18nSupport, MessagesApi }
+import play.api.mvc.Request
+import play.twirl.api.Html
+import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
+import preview.views.html.error_template
+import com.google.inject.{ Inject, Singleton }
 
 @Singleton
-class AppConfig @Inject()
-  (
-    config: Configuration
-  , servicesConfig: ServicesConfig
-  ) {
+class ErrorHandler @Inject()(
+                              val messagesApi: MessagesApi,
+                              view: error_template
+                            ) extends FrontendErrorHandler with I18nSupport {
 
-  val authBaseUrl: String = servicesConfig.baseUrl("auth")
-
-  val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
-  val graphiteHost: String     = config.get[String]("microservice.metrics.graphite.host")
+  override def standardErrorTemplate(pageTitle: String, heading: String, message: String)(
+    implicit rh: Request[_]): Html =
+    view(pageTitle, heading, message)
 }

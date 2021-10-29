@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.developeremailrenderer.config
+package uk.gov.hmrc.developeremailrenderer.templates.apicatalogue.params
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import java.util.Base64
+import play.api.libs.json.Json
+object ApiCatalogueReportParams {
 
-@Singleton
-class AppConfig @Inject()
-  (
-    config: Configuration
-  , servicesConfig: ServicesConfig
-  ) {
-
-  val authBaseUrl: String = servicesConfig.baseUrl("auth")
-
-  val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
-  val graphiteHost: String     = config.get[String]("microservice.metrics.graphite.host")
+  def getQuestions(params: Map[String, Any]): List[String] =
+    params
+      .get("contactReasons")
+      .fold(List.empty[String])(contactReasons => {
+        val encoded = contactReasons.toString
+        val decoded = new String(Base64.getDecoder.decode(encoded), "UTF-8")
+        Json.parse(decoded).as[List[String]]
+      })
 }
