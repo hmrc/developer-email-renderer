@@ -14,36 +14,9 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.developeremailrenderer.templates.apicatalogue.params.ApiCatalogueReportParams.getQuestions
-
 @(params: Map[String, Any])
-@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, "Information request about " + params("apiTitle")) { 
+@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, params("subject"))
 
-  <p style="margin: 0 0 30px; font-size: 19px;">Dear platform team</p>
+@* Need to convert @{params("body")} from mark down to html *@
 
-  <p style="margin: 0 0 30px; font-size: 19px;">We have received an information request about @{params("apiTitle")} on the API catalogue.</p>
-
-  <p style="margin: 0 0 30px; font-size: 19px;">Here is a summary.</p>
-
-  <p style="margin: 0 0 30px; font-size: 19px;"><strong>Name</strong>: @{params("senderName")}</p>
-
-  <p style="margin: 0 0 30px; font-size: 19px;"><strong>Email</strong>: @{params("senderEmail")}</p>
-
-  @defining(getQuestions(params)) { questions =>
-    @if(questions.nonEmpty){
-      <p style="margin: 0 0 30px; font-size: 19px;"><strong>Why do you need to contact the API team?</strong></p>
-
-      @for(question <- questions){
-        <p style="margin: 0 0 30px; font-size: 19px;">@question</p>
-      }
-    }
-  }
-  
-  <p style="margin: 0 0 30px; font-size: 19px;"><strong>Do you have a specific question?</strong></p>
-
-  <p style="margin: 0 0 30px; font-size: 19px;">@{params("specificQuestion")}</p>
-
-  <p style="margin: 0 0 30px; font-size: 19px;">You should reply to @{params("senderEmail")} in 7 days.</p>
-
-  <p style="margin: 0 0 30px; font-size: 19px;">From HMRC API catalogue</p>
-}
+@{params("body")}
