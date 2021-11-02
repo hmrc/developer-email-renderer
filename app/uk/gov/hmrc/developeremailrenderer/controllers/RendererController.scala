@@ -20,6 +20,11 @@ import com.google.inject.Inject
 import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc._
+import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderRequest
+import uk.gov.hmrc.developeremailrenderer.domain.{MissingTemplateId, TemplateRenderFailure}
+import uk.gov.hmrc.developeremailrenderer.services.TemplateRenderer
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class RendererController @Inject()(templateRenderer: TemplateRenderer, mcc: MessagesControllerComponents)
     extends FrontendController(mcc) {
