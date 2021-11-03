@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.developeremailrenderer.config
+package uk.gov.hmrc.developeremailrenderer.templates
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import com.typesafe.config.ConfigFactory
+import scala.util.Try
 
-@Singleton
-class AppConfig @Inject()
-  (
-    config: Configuration
-  , servicesConfig: ServicesConfig
-  ) {
+case class FromAddress(f: Map[String, String] => String) {
+  def apply(p: Map[String, String]) = f(p)
+}
 
-  val authBaseUrl: String = servicesConfig.baseUrl("auth")
+object FromAddress {
+  private val defaultDomain = "tax.service.gov.uk"
 
-  val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
-  val graphiteHost: String     = config.get[String]("microservice.metrics.graphite.host")
+  lazy val replyDomain = Try(ConfigFactory.load().getString("fromAddress.domain")).toOption.getOrElse(defaultDomain)
+
+  def noReply(name: String): String = s"$name <noreply@$replyDomain>"
+
+  lazy val govUkTeamAddress = noReply("Gov.uk Team")
+  lazy val govUkTeamAddressWelsh = noReply("Gov.uk Tîm")
 }

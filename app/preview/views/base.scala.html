@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package uk.gov.hmrc.developeremailrenderer.config
+@(item: preview.PreviewListItem)
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-
-@Singleton
-class AppConfig @Inject()
-  (
-    config: Configuration
-  , servicesConfig: ServicesConfig
-  ) {
-
-  val authBaseUrl: String = servicesConfig.baseUrl("auth")
-
-  val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
-  val graphiteHost: String     = config.get[String]("microservice.metrics.graphite.host")
-}
+(<a href="/hmrc-email-renderer/test-only/preview/html/@{item.templateId}@{item.queryString}">HTML</a>)
+(<a href="/hmrc-email-renderer/test-only/preview/text/@{item.templateId}@{item.queryString}">Text</a>)
+(<a href="/hmrc-email-renderer/test-only/preview/source/@{item.templateId}@{item.queryString}">Source</a>)

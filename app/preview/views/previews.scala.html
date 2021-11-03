@@ -1,0 +1,44 @@
+@*
+ * Copyright 2021 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *@
+
+@import preview.PreviewGroup
+@(forPreview: Stream[PreviewGroup])
+
+<html>
+<head>
+<title>Preview Email Templates</title>
+</head>
+<body>
+<h2>Preview Email Templates</h2>
+<p>
+  This preview is inaccessible in production! It is intended for you to get early feedback on changes to templates.
+  Use the links below to preview the HTML, text and HTML Source (for use in e.g. Litmus) versions of your templates.
+  Templates are grouped by area of responsibility, and each element is listed by the format:<br/><br/>
+  - <i>subject</i> [templateId] (link to HTML preview) (link to Text preview) (link to HTML Source )
+</p>
+<p>If you are starting a new group of templates for your area of responsibility, you must create a new "template group" and append
+   it's mappings to <code>uk.gov.hmrc.hmrcemailrenderer.templates.TemplateLocator</code>.
+</p>
+<p>If your template requires parameters to render, add <em>example</em> values of them to the map in <code>preview.TemplateParams2</code> and they will be added as query parameters to your template when you preview it.</p>
+<p>Note: <b>Do NOT use CSS in your email templates. All styling should be applied using inline styles and attributes on HTML elements and alignment should be done using tables (ie web development from around 1999). This is to help rendering engines in email clients.</b></p>
+
+@forPreview.map { group =>
+  <h3>@group.name</h3>
+  @preview.views.html.helpers.previewTemplates(group.items)
+}
+
+</body>
+</html>

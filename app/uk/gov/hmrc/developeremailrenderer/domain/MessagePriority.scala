@@ -14,21 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.developeremailrenderer.config
+package uk.gov.hmrc.developeremailrenderer.domain
 
-import javax.inject.{Inject, Singleton}
-import play.api.Configuration
-import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-
-@Singleton
-class AppConfig @Inject()
-  (
-    config: Configuration
-  , servicesConfig: ServicesConfig
-  ) {
-
-  val authBaseUrl: String = servicesConfig.baseUrl("auth")
-
-  val auditingEnabled: Boolean = config.get[Boolean]("auditing.enabled")
-  val graphiteHost: String     = config.get[String]("microservice.metrics.graphite.host")
+object MessagePriority extends Enumeration {
+  type MessagePriority = Value
+  val Urgent = Value("urgent")
+  val Standard = Value("standard")
+  val Background = Value("background")
 }
