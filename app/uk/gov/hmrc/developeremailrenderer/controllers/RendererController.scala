@@ -18,18 +18,19 @@ package uk.gov.hmrc.developeremailrenderer.controllers
 
 import com.google.inject.Inject
 import play.api.Logger
-import play.api.libs.json.Json
+import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderRequest
-import uk.gov.hmrc.developeremailrenderer.domain.{MissingTemplateId, TemplateRenderFailure}
+import uk.gov.hmrc.developeremailrenderer.domain.{ MissingTemplateId, TemplateRenderFailure }
 import uk.gov.hmrc.developeremailrenderer.services.TemplateRenderer
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class RendererController @Inject()(templateRenderer: TemplateRenderer, mcc: MessagesControllerComponents)
     extends FrontendController(mcc) {
 
-  def renderTemplate(templateId: String) = Action.async(parse.json) { implicit request =>
+  def renderTemplate(templateId: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withJsonBody[RenderRequest] { renderReq =>
       templateRenderer.languageTemplateId(templateId, renderReq.email).map { tId =>
         templateRenderer.render(tId, renderReq.parameters) match {
