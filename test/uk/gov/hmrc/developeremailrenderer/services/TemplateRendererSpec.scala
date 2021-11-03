@@ -92,7 +92,7 @@ class TemplateRendererSpec extends WordSpecLike with Matchers with OptionValues 
       templateRenderer.languageTemplateId(templateId, Some("test@test.com")).futureValue shouldBe templateId
       verify(auditConnector)
         .sendEvent(dataEventArgumentCaptor.capture())(any[HeaderCarrier], any[ExecutionContext])
-      dataEventArgumentCaptor.getValue.auditSource shouldBe "hmrc-email-renderer"
+      dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
       dataEventArgumentCaptor.getValue.detail shouldBe Map(
         "email"              -> "test@test.com",
@@ -123,7 +123,7 @@ class TemplateRendererSpec extends WordSpecLike with Matchers with OptionValues 
       verify(auditConnector)
         .sendEvent(dataEventArgumentCaptor.capture())(any[HeaderCarrier], any[ExecutionContext])
 
-      dataEventArgumentCaptor.getValue.auditSource shouldBe "hmrc-email-renderer"
+      dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
       dataEventArgumentCaptor.getValue.detail shouldBe Map(
         "email"              -> "test@test.com",
@@ -155,7 +155,7 @@ class TemplateRendererSpec extends WordSpecLike with Matchers with OptionValues 
       verify(auditConnector)
         .sendEvent(dataEventArgumentCaptor.capture())(any[HeaderCarrier], any[ExecutionContext])
 
-      dataEventArgumentCaptor.getValue.auditSource shouldBe "hmrc-email-renderer"
+      dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
       dataEventArgumentCaptor.getValue.detail shouldBe Map(
         "email"              -> "test@test.com",
@@ -187,7 +187,7 @@ class TemplateRendererSpec extends WordSpecLike with Matchers with OptionValues 
       verify(auditConnector)
         .sendEvent(dataEventArgumentCaptor.capture())(any[HeaderCarrier], any[ExecutionContext])
 
-      dataEventArgumentCaptor.getValue.auditSource shouldBe "hmrc-email-renderer"
+      dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
       dataEventArgumentCaptor.getValue.detail shouldBe Map(
         "email"              -> "test@test.com",
@@ -217,7 +217,7 @@ class TemplateRendererSpec extends WordSpecLike with Matchers with OptionValues 
       verify(auditConnector)
         .sendEvent(dataEventArgumentCaptor.capture())(any[HeaderCarrier], any[ExecutionContext])
 
-      dataEventArgumentCaptor.getValue.auditSource shouldBe "hmrc-email-renderer"
+      dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
       dataEventArgumentCaptor.getValue.detail shouldBe Map(
         "email"              -> "N/A",
@@ -246,7 +246,7 @@ class TemplateRendererSpec extends WordSpecLike with Matchers with OptionValues 
       verify(auditConnector)
         .sendEvent(dataEventArgumentCaptor.capture())(any[HeaderCarrier], any[ExecutionContext])
 
-      dataEventArgumentCaptor.getValue.auditSource shouldBe "hmrc-email-renderer"
+      dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
       dataEventArgumentCaptor.getValue.detail shouldBe Map(
         "email"              -> "N/A",
