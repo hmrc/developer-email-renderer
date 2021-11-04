@@ -26,40 +26,4 @@ import uk.gov.hmrc.developeremailrenderer.util.ResponseMatchers
 
 class RendererControllerISpec
     extends WordSpecLike with Matchers with OptionValues with WsScalaTestClient with GuiceOneServerPerSuite
-    with ScalaFutures with ResponseMatchers with ServerProvider {
-  "POST /templates/:templateId" should {
-    "return 200 and yield the rendered template data when supplied a valid templateId thats not defined in WelshTemplatesByLangPreference" in {
-      val params = Map(
-        "verificationLink" -> "/abc"
-      )
-      implicit val ws: WSClient = app.injector.instanceOf(classOf[WSClient])
-
-      val response = wsUrl(s"/templates/vat").post(Json.obj("parameters" -> params))
-      response should have(
-        status(200),
-        jsonProperty(__ \ "fromAddress", "vat <noreply@tax.service.gov.uk>"),
-        jsonProperty(__ \ "subject", "Soft Drinks Levy application submitted"),
-        jsonProperty(__ \ "service", "vat"),
-        jsonProperty(__ \ "plain"),
-        jsonProperty(__ \ "html")
-      )
-    }
-
-    "return 404 when a non-existent templateId is specified on the path" in {
-      implicit lazy val wsc: WSClient = app.injector.instanceOf[WSClient]
-
-      wsUrl(s"/templates/nonExistentTemplateId").post(Json.obj("parameters" -> Map.empty[String, String])) should have(
-        status(404))
-    }
-
-    "return 400 and indicate the first point of failure when the parameters for the template are not supplied and its not in WelshTemplatesByLangPreference" in {
-      implicit lazy val wsc: WSClient = app.injector.instanceOf[WSClient]
-
-      wsUrl(s"/templates/hts_verification_email")
-        .post(Json.obj("parameters" -> Map.empty[String, String])) should have(
-        status(400),
-        jsonProperty(__ \ "reason", "key not found: name")
-      )
-    }
-  }
-}
+    with ScalaFutures with ResponseMatchers with ServerProvider {}
