@@ -50,9 +50,9 @@ object MessageTemplate {
       priority
     )
 
-  def createWithDynamicSubject(
+  def createWithDynamicSubjectAndFromAddress(
     templateId: String,
-    fromAddress: String,
+    fromAddress: Map[String, String] => String,
     service: ServiceIdentifier,
     subject: Map[String, String] => String,
     plainTemplate: Body.Plain,
@@ -60,7 +60,7 @@ object MessageTemplate {
     priority: Option[MessagePriority] = None) =
     MessageTemplate(
       templateId,
-      FromAddress(_ => fromAddress),
+      FromAddress(fromAddress),
       service,
       Subject(subject),
       plainTemplate,

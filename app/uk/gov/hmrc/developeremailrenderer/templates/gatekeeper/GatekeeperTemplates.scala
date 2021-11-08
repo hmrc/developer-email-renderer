@@ -14,22 +14,32 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.developeremailrenderer.templates.apicatalogue
+package uk.gov.hmrc.developeremailrenderer.templates.gatekeeper
 
 import uk.gov.hmrc.developeremailrenderer.domain.{ MessagePriority, MessageTemplate }
-import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.ApiCatalogue
+import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
 import uk.gov.hmrc.developeremailrenderer.templates.FromAddress
 
 /**
   * Templates used by the API Catalogue.
   */
 object GatekeeperTemplates {
+
+  private def extractFromAddress(params: Map[String, String]): String = {
+    val sender = params.get("fromAddress").getOrElse("HMRC Developer Hub")
+    FromAddress.noReply(s"HMRC $sender")
+  }
+  private def extractSubject(params: Map[String, String]): String = {
+    val subject = params.get("subject").getOrElse("Developer Hub")
+    FromAddress.noReply(s"HMRC $subject")
+  }
+
   val templates = Seq(
-    MessageTemplate.create(
+    MessageTemplate.createWithDynamicSubjectAndFromAddress(
       templateId = "gatekeeper",
-      fromAddress = FromAddress.noReply("API Platform"),
-      service = ApiCatalogue,
-      subject = "Information request from the API catalogue",
+      fromAddress = extractFromAddress,
+      service = GateKeeper,
+      subject = _.apply("subject"),
       plainTemplate = txt.gatekeeper.f,
       htmlTemplate = html.gatekeeper.f,
       priority = Some(MessagePriority.Standard)

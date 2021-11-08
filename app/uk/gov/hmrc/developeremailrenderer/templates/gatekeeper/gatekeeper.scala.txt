@@ -1,0 +1,5 @@
+@(params: Map[String, Any])
+
+Dear Customer,
+ 
+@{params("body")}

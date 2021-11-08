@@ -17,12 +17,12 @@
 package uk.gov.hmrc.developeremailrenderer.templates
 
 import uk.gov.hmrc.developeremailrenderer.domain.MessageTemplate
-import uk.gov.hmrc.developeremailrenderer.templates.apicatalogue.GatekeeperTemplates
+import uk.gov.hmrc.developeremailrenderer.templates.gatekeeper.GatekeeperTemplates
 
 trait TemplateLocator {
   def templateGroups: Map[String, Seq[MessageTemplate]] =
     Map(
-      "API Catalogue" -> GatekeeperTemplates.templates
+      "gatekeeper" -> GatekeeperTemplates.templates
     )
 
   lazy val all: Seq[MessageTemplate] = templateGroups.values.flatten.toSeq
