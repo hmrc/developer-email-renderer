@@ -14,10 +14,11 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.developeremailrenderer.templates.helpers.{Markdown, Slugify}
 @(params: Map[String, Any])
 @uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, "" + params("subject")) {
 
 
-@{params("body")}
+@Markdown(params("body").toString())
 
 }
