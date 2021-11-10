@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.developeremailrenderer.model
-
-import enumeratum.{ Enum, EnumEntry }
+package uk.gov.hmrc.developeremailrenderer.controllers.model
 import play.api.libs.json._
+import enumeratum.{ Enum, EnumEntry }
 
 sealed abstract class Language(override val entryName: String) extends EnumEntry
 

@@ -42,13 +42,13 @@ import play.api.Configuration
 import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
 import uk.gov.hmrc.developeremailrenderer.domain.{ MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure }
-import uk.gov.hmrc.developeremailrenderer.model.Language
 import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.SelfAssessment
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.{ AuditConnector, AuditResult }
 import uk.gov.hmrc.play.audit.model.DataEvent
 import views.{ html, txt }
+import uk.gov.hmrc.developeremailrenderer.model.Language
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ ExecutionContext, Future }
