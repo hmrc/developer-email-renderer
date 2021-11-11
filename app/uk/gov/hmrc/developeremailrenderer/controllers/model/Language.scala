@@ -26,8 +26,6 @@ case object Language extends Enum[Language] {
 
   case object English extends Language("en")
 
-  case object Welsh extends Language("cy")
-
   implicit val languageReads = Reads[Language] { js =>
     js match {
       case JsString(value) => JsSuccess(Language.withNameInsensitiveOption(value).getOrElse(Language.English))
