@@ -22,8 +22,47 @@ import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import org.scalatestplus.play.{ ServerProvider, WsScalaTestClient }
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
-import uk.gov.hmrc.developeremailrenderer.util.ResponseMatchers
+import uk.gov.hmrc.play.http.test.ResponseMatchers
 
 class RendererControllerISpec
     extends WordSpecLike with Matchers with OptionValues with WsScalaTestClient with GuiceOneServerPerSuite
-    with ScalaFutures with ResponseMatchers with ServerProvider {}
+    with ScalaFutures with ResponseMatchers with ServerProvider {
+  "POST /templates/:templateId" should {
+    "return 200 and yield the rendered template data when supplied a valid templateId thats not defined in WelshTemplatesByLangPreference" in {
+      val params = Map(
+        "subject" -> "/abc",
+        "body"    -> "/abc",
+        "service" -> "/abc"
+      )
+      implicit val ws: WSClient = app.injector.instanceOf(classOf[WSClient])
+
+      val response = wsUrl(s"/templates/gatekeeper").post(Json.obj("parameters" -> params))
+      response should have(
+        status(200),
+        jsonProperty(__ \ "fromAddress", "HMRC HMRC Developer Hub <noreply@tax.service.gov.uk>"),
+        jsonProperty(__ \ "subject", "/abc"),
+        jsonProperty(__ \ "service", "gatekeeper"),
+        jsonProperty(__ \ "plain"),
+        jsonProperty(__ \ "html")
+      )
+    }
+
+    "return 404 when a non-existent templateId is specified on the path" in {
+      implicit lazy val wsc: WSClient = app.injector.instanceOf[WSClient]
+
+      wsUrl(s"/templates/nonExistentTemplateId").post(Json.obj("parameters" -> Map.empty[String, String])) should have(
+        status(404))
+    }
+
+    "return 400 and indicate the first point of failure when the parameters for the template are not supplied and its not in WelshTemplatesByLangPreference" in {
+      implicit lazy val wsc: WSClient = app.injector.instanceOf[WSClient]
+
+      wsUrl(s"/templates/gatekeeper")
+        .post(Json.obj("parameters" -> Map.empty[String, String])) should have(
+        status(400),
+        jsonProperty(__ \ "reason", "key not found: body")
+      )
+    }
+  }
+
+}
