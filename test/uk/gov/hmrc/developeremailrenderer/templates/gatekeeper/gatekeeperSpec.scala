@@ -28,44 +28,27 @@ class gatekeeperSpec extends WordSpec with Matchers {
   val developerHubTitle = "Developer Hub Title"
 
   val templateParams = Map(
-    "applicationName" -> applicationName,
-    "body"            -> "This is the body.",
-    "subject"         -> "This is the subject.",
-    "borderColour"    -> "#005EA5"
+    "applicationName"      -> applicationName,
+    "body"                 -> "This is the body.",
+    "staticAssetUrlPrefix" -> "http://uri",
+    "staticAssetVersion"   -> "v1",
+    "subject"              -> "This is the subject.",
+    "borderColour"         -> "#005EA5"
   )
 
   "htmlView" should {
     "render as" in new TestCase {
       val renderedHtml = gatekeeper.html.gatekeeper.render(templateParams)
       renderedHtml.contentType should include("text/html")
-      renderedHtml.body should include(
-        "<p style=\"margin: 0 0 30px; font-size: 19px;\">You are now " + article + " " + role +
-          " on " + applicationName + ".</p>")
-      renderedHtml.body should include("<p style=\"margin: 0 0 30px; font-size: 19px;\">From HMRC Developer Hub</p>")
-    }
-    "render with developerHubTitle" in new TestCase {
-      val templateParamsPlus = templateParams + ("developerHubTitle" -> developerHubTitle)
-      val renderedHtml = gatekeeper.html.gatekeeper.render(templateParamsPlus)
-      renderedHtml.body should include(
-        "<p style=\"margin: 0 0 30px; font-size: 19px;\">You are now " + article + " " + role +
-          " on " + applicationName + ".</p>")
-      renderedHtml.body should include(
-        "<p style=\"margin: 0 0 30px; font-size: 19px;\">From HMRC " + developerHubTitle + "</p>")
+      renderedHtml.body should include("<p>This is the body.</p>")
     }
   }
 
   "textView" should {
     "render as" in new TestCase {
-      val renderedTxt = gatekeeper.html.gatekeeper.render(templateParams)
+      val renderedTxt = gatekeeper.txt.gatekeeper.render(templateParams)
       renderedTxt.contentType should include("text/plain")
-      renderedTxt.body should include("You are now " + article + " " + role + " on " + applicationName + ".")
-      renderedTxt.body should include("From HMRC Developer Hub")
-    }
-    "render with developerHubTitle" in new TestCase {
-      val templateParamsPlus = templateParams + ("developerHubTitle" -> developerHubTitle)
-      val renderedTxt = gatekeeper.html.gatekeeper.render(templateParamsPlus)
-      renderedTxt.body should include("You are now " + article + " " + role + " on " + applicationName + ".")
-      renderedTxt.body should include("From HMRC " + developerHubTitle)
+      renderedTxt.body should include("This is the body")
     }
   }
 }
