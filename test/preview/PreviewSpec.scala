@@ -22,7 +22,6 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import uk.gov.hmrc.developeremailrenderer.domain.{ Body, MessagePriority, MessageTemplate, TemplateRenderFailure }
 import uk.gov.hmrc.developeremailrenderer.services.TemplateRenderer
 import uk.gov.hmrc.developeremailrenderer.templates.{ ServiceIdentifier, TemplateLocator }
-// import org.scalatest.{Matchers, OptionValues, WordSpecLike}
 
 class PreviewSpec extends WordSpecLike with Matchers with OptionValues with GuiceOneAppPerSuite {
 

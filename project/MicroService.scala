@@ -1,9 +1,11 @@
+import AppDependencies.overrides
 import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
 import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.routes.RoutesKeys.routesGenerator
 import sbt.Keys._
 import sbt.Tests.{ Group, SubProcess }
 import sbt._
+import scoverage.ScoverageKeys.coverageExcludedPackages
 import uk.gov.hmrc.ServiceManagerPlugin.Keys.itDependenciesList
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 
@@ -17,6 +19,8 @@ trait MicroService {
   val appName: String
 
   lazy val appDependencies: Seq[ModuleID] = ???
+  lazy val dependencyOverrides: Seq[ModuleID] = ???
+
   lazy val plugins: Seq[Plugins] = Seq.empty
   lazy val playSettings: Seq[Setting[_]] = Seq.empty
 
@@ -62,6 +66,16 @@ trait MicroService {
     )
     .settings(resolvers += Resolver.jcenterRepo)
     .settings(routesGenerator := InjectedRoutesGenerator)
+
+  coverageExcludedPackages := Seq(
+    "<empty>",
+    "com.kenshoo.play.metrics",
+    ".*definition.*",
+    "prod",
+    "testOnlyDoNotUseInAppConf",
+    "app",
+    "uk.gov.hmrc.BuildInfo"
+  ).mkString(";")
 }
 
 private object TestPhases {

@@ -35,9 +35,10 @@ package uk.gov.hmrc.developeremailrenderer.services
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.{ any, anyString }
 import org.mockito.Mockito._
+import org.mockito.MockitoSugar
+
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{ Matchers, OptionValues, WordSpecLike }
-import org.scalatestplus.mockito.MockitoSugar
 import play.api.Configuration
 import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
