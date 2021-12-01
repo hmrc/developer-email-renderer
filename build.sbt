@@ -68,7 +68,7 @@ lazy val microservice = (project in file("."))
 
 lazy val appName = "developer-email-renderer"
 
-coverageMinimum := 84
+coverageMinimum := 35
 coverageFailOnMinimum := true
 coverageExcludedPackages := Seq(
   "<empty>",
