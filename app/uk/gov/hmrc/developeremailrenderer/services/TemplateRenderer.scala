@@ -29,6 +29,7 @@ import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.{ AuditConnector, AuditResult }
 import uk.gov.hmrc.play.audit.model.DataEvent
 import uk.gov.hmrc.play.audit.model.EventTypes.Succeeded
+import util.ApplicationLogger
 
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.{ Failure, Success, Try }
@@ -36,7 +37,8 @@ import scala.util.{ Failure, Success, Try }
 class TemplateRenderer @Inject()(
   configuration: Configuration,
   auditConnector: AuditConnector,
-  preferencesConnector: PreferencesConnector) {
+  preferencesConnector: PreferencesConnector)
+    extends ApplicationLogger {
 
   val locator: TemplateLocator = TemplateLocator
 
@@ -84,11 +86,11 @@ class TemplateRenderer @Inject()(
     )
 
     auditConnector.sendEvent(event) map { success =>
-      Logger.debug("Language event successfully audited")
+      logger.debug("Language event successfully audited")
       success
     } recover {
       case e @ AuditResult.Failure(msg, _) =>
-        Logger.warn(s"Language event failed to audit: $msg")
+        logger.warn(s"Language event failed to audit: $msg")
         e
     }
   }
@@ -98,7 +100,7 @@ class TemplateRenderer @Inject()(
     ec: ExecutionContext): Future[String] = {
 
     if (templatesByLangPreference.size <= 0) {
-      Logger.warn("WelshTemplatesByLangPreferences allowlist is empty")
+      logger.warn("WelshTemplatesByLangPreferences allowlist is empty")
     }
 
     val result = for {
@@ -114,7 +116,7 @@ class TemplateRenderer @Inject()(
         selectedTemplateId
       } recover {
         case e: Throwable =>
-          Logger.error(s"Error retrieving language preference from preferences service: ${e.getMessage}")
+          logger.error(s"Error retrieving language preference from preferences service: ${e.getMessage}")
           originalTemplateId
       }
     }
