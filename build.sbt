@@ -47,16 +47,27 @@ lazy val microservice = (project in file("."))
     majorVersion := 0,
     Test / testOptions := Seq(Tests.Argument(TestFrameworks.ScalaTest, "-eT")),
     Test / unmanagedSourceDirectories += baseDirectory.value / "testCommon",
-    Test / unmanagedSourceDirectories += baseDirectory.value / "test"
+    Test / unmanagedSourceDirectories += baseDirectory.value / "test",
+    testOptions in Test := Seq(
+      Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports"),
+      Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report"),
+      Tests.Argument("-oD")
+    ),
   )
   .configs(IntegrationTest)
   .settings(
     Defaults.itSettings,
     IntegrationTest / Keys.fork := false,
+    addTestReportOption(IntegrationTest, "int-test-reports"),
     IntegrationTest / parallelExecution := false,
     IntegrationTest / testOptions := Seq(Tests.Argument(TestFrameworks.ScalaTest, "-eT")),
     IntegrationTest / unmanagedSourceDirectories += baseDirectory.value / "testCommon",
-    IntegrationTest / unmanagedSourceDirectories += baseDirectory.value / "it"
+    IntegrationTest / unmanagedSourceDirectories += baseDirectory.value / "it",
+    testOptions in IntegrationTest := Seq(
+      Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/int-test-reports"),
+      Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/int-test-reports/html-report"),
+      Tests.Argument("-oD")
+    ),
   )
   .settings(
     resolvers ++= Seq(
