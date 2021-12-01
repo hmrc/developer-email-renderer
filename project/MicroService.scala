@@ -1,4 +1,3 @@
-import AppDependencies.overrides
 import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
 import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.routes.RoutesKeys.routesGenerator
@@ -19,7 +18,6 @@ trait MicroService {
   val appName: String
 
   lazy val appDependencies: Seq[ModuleID] = ???
-  lazy val dependencyOverrides: Seq[ModuleID] = ???
 
   lazy val plugins: Seq[Plugins] = Seq.empty
   lazy val playSettings: Seq[Setting[_]] = Seq.empty
