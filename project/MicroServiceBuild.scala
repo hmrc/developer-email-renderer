@@ -1,5 +1,5 @@
 import AppDependencies.dependencies
-import sbt.{ ModuleID, _ }
+import sbt._
 import play.sbt.PlayImport._
 import play.core.PlayVersion
 
