@@ -1,5 +1,5 @@
 @*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 @import uk.gov.hmrc.developeremailrenderer.templates.helpers.{Markdown, Slugify}
 @(params: Map[String, Any])
-@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, "" + params("subject")) {
+@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, params("subject").toString(), false, None, false, false) {
 
 
-@Markdown(params("body").toString())
+@Markdown("Dear Srinivasulu Munagala, \n\n" + params("body").toString())
 
 }
