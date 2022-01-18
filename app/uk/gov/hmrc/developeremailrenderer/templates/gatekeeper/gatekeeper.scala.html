@@ -16,7 +16,7 @@
 
 @import uk.gov.hmrc.developeremailrenderer.templates.helpers.{Markdown, Slugify}
 @(params: Map[String, Any])
-@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, params("subject").toString(), false, None, false, false) {
+@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, params("subject").toString()) {
 
 
 @Markdown("Dear Srinivasulu Munagala, \n\n" + params("body").toString())
