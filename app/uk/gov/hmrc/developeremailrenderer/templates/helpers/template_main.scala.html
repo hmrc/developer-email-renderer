@@ -16,7 +16,7 @@
 
 @import play.api.Play
 
-@(params: Map[String, Any], title: String, showHeading1: Boolean = false, footerMessage: Option[Html] = None, showHmrcBanner: Boolean = false)(content: Html)
+@(params: Map[String, Any], title: String, showFooter: String = "true", footerMessage: Option[Html] = None, showHmrcBanner: String = "true")(content: Html)
 <!DOCTYPE html>
 <html>
   <head>
@@ -45,7 +45,7 @@
   </td>
 </tr>
 
-        @if(showHmrcBanner) { <tr id="tagline">
+        @if(showHmrcBanner == "true") { <tr id="tagline">
   <td style="font-family: Helvetica, Arial, sans-serif;">
     <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">
       <tr>
@@ -65,36 +65,39 @@
             <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">
               <tr>
                 <td style="font-family: Helvetica, Arial, sans-serif; padding: 25px 20px 20px;">
-                  @if(showHeading1) {<h1 style="margin: 0 0 30px; font-size: 36px;">@title</h1>}
                   @content
                 </td>
               </tr>
             </table>
           </td>
         </tr>
+    @if(showFooter == "true") {
         <tr id="footer" style="font-size: 14px; color: #666666;">
-  <td style="font-family: Helvetica, Arial, sans-serif;">
-    <table width="100%" cellspacing="0" cellpadding="0">
-      <tr>
-          <td colspan="75%" style="font-family: Helvetica, Arial, sans-serif; padding: 20px;">
-              @if(footerMessage.isDefined) {
-                  @footerMessage<br><br>
-                  If you&#8217;re unsure an email is from HMRC:
-                  <ul style="margin: 5px 0 0; padding-left: 20px;">
-                      <li style="margin-bottom: 5px;">
-                          Do not reply to it or click on any links
-                      </li>
-                      <li style="margin-bottom: 5px;">
-                          Report the suspicious email to HMRC - to find out how, go to GOV.UK and search for 'Avoid and report internet scams and phishing'
-                      </li>
-                  </ul>
-                <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/govuk-crest-2x.png" width="150">
-              }
+          <td style="font-family: Helvetica, Arial, sans-serif;">
+            <table width="100%" cellspacing="0" cellpadding="0">
+              <tr>
+                  <td colspan="75%" style="font-family: Helvetica, Arial, sans-serif; padding: 20px;">
+                      @if(footerMessage.isDefined) {
+                          @footerMessage<br><br>
+                      }
+                      If you&#8217;re unsure an email is from HMRC:
+                          <ul style="margin: 5px 0 0; padding-left: 20px;">
+                              <li style="margin-bottom: 5px;">
+                                  Do not reply to it or click on any links
+                              </li>
+                              <li style="margin-bottom: 5px;">
+                                  Report the suspicious email to HMRC - to find out how, go to GOV.UK and search for 'Avoid and report internet scams and phishing'
+                              </li>
+                          </ul>
+                  </td>
+                  <td colspan="25%" align="right" style="font-family: Helvetica, Arial, sans-serif; padding: 20px;">
+                        <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/govuk-crest-2x.png" width="150">
+                  </td>
+              </tr>
+            </table>
           </td>
-      </tr>
-    </table>
-  </td>
-</tr>
+        </tr>
+   }
       </table>
     </div>
   </body>

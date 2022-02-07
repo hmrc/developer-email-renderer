@@ -16,9 +16,9 @@
 
 @import uk.gov.hmrc.developeremailrenderer.templates.helpers.{Markdown, Slugify}
 @(params: Map[String, Any])
-@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, params("subject").toString()) {
+@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, params("subject").toString(), params("showFooter").toString(), None, params("showHmrcBanner").toString()) {
 
 
-@Markdown("Dear Developer, \n\n" + params("body").toString())
+@Markdown("Dear " + params("firstName").toString() + " " + params("lastName").toString() + ", \n\n" + params("body").toString())
 
 }
