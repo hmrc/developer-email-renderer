@@ -29,19 +29,19 @@ import uk.gov.hmrc.play.http.test.ResponseMatchers
 class TemplatePrioritiesISpec
     extends WordSpecLike with Matchers with OptionValues with WsScalaTestClient with GuiceOneServerPerSuite
     with ScalaFutures with ResponseMatchers with ServerProvider with TableDrivenPropertyChecks {
-  "Rendered templates" should {
-
-    implicit lazy val wsc: WSClient = app.injector.instanceOf[WSClient]
-    implicit lazy val pos: Position = Position.here
-
-    forAll(TestTemplates.standard) { (templateId, params) =>
-      s"supply a priority for templateId '$templateId'" in {
-        val response = wsUrl(s"/templates/$templateId").post(Json.obj("parameters" -> params)).futureValue
-        response.status shouldBe 200
-        (response.json \ "priority").asOpt[String] shouldBe Some("standard")
-      }
-    }
-  }
+//  "Rendered templates" should {
+//
+//    implicit lazy val wsc: WSClient = app.injector.instanceOf[WSClient]
+//    implicit lazy val pos: Position = Position.here
+//
+//    forAll(TestTemplates.standard) { (templateId, params) =>
+//      s"supply a priority for templateId '$templateId'" in {
+//        val response = wsUrl(s"/templates/$templateId").post(Json.obj("parameters" -> params)).futureValue
+//        response.status shouldBe 200
+//        (response.json \ "priority").asOpt[String] shouldBe Some("standard")
+//      }
+//    }
+//  }
 
   object TestTemplates {
 
