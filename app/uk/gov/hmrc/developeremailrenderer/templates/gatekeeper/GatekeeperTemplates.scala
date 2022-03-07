@@ -25,14 +25,8 @@ import uk.gov.hmrc.developeremailrenderer.templates.FromAddress
   */
 object GatekeeperTemplates {
 
-  private def extractFromAddress(params: Map[String, String]): String = {
-    val sender = params.get("fromAddress").getOrElse("HMRC Developer Hub")
-    FromAddress.noReply(s"HMRC $sender")
-  }
-  private def extractSubject(params: Map[String, String]): String = {
-    val subject = params.get("subject").getOrElse("Developer Hub")
-    FromAddress.noReply(s"HMRC $subject")
-  }
+  private def extractFromAddress(params: Map[String, String]): String =
+    FromAddress.noReply("Software Developer Support Team")
 
   val templates = Seq(
     MessageTemplate.createWithDynamicSubjectAndFromAddress(
