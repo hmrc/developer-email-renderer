@@ -38,12 +38,12 @@
               </a>
           </td>
           <td style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0; border-bottom: solid 10px @{params("borderColour")};">
-            <a title="Go to the GOV.UK homepage" style="font-size: 30px; font-weight: bold; text-decoration: none; color: #FFFFFF;">HM Revenue & Customs Software Developer Support Team</a>
+            <a title="Go to the GOV.UK homepage" style="font-size: 20px; font-weight: bold; text-decoration: none; color: #FFFFFF;">HM Revenue & Customs Software Developer Support Team</a>
           </td>
       </tr>
     </table>
       <p></p>
-      <p style="background-color: #FFFF00; margin: 0; padding: 0;"><span>Manage the emails you receive from us in your <a href="https://developer.service.hmrc.gov.uk/api-documentation">Developer Hub</a> account under ‘Email preferences’.</span></p>
+      <p style="font-size: 12px; margin: 0; padding: 0;"><span>Manage the emails you receive from us in your <a href="https://developer.service.hmrc.gov.uk/api-documentation">Developer Hub</a> account under ‘Email preferences’.</span></p>
   </td>
 </tr>
 
@@ -66,7 +66,7 @@
           <td style="font-family: Helvetica, Arial, sans-serif;">
             <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">
               <tr>
-                <td style="font-family: Helvetica, Arial, sans-serif; padding: 25px 20px 20px;">
+                <td style="font-family: Helvetica, Arial, sans-serif; padding: 0;">
                   @content
                 </td>
               </tr>
@@ -76,26 +76,39 @@
     @if(showFooter == "true") {
         <tr id="footer" style="font-size: 14px; color: #666666;">
           <td style="font-family: Helvetica, Arial, sans-serif;">
-              <p>Thank you for your cooperation.</p>
-
-              <p>Kind regards,</p>
+              <a title="thanks" style="font-size: 15px;  text-decoration: none; color: #000000;">Thank you for your cooperation.</a>
 
               <p></p>
-
-              <p></p>
-              <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/icons/crests/hmrc_crest_27px_x2.png" height="26" style="border-left: solid 2px #009390; padding-left: 6px; margin: 5px 6px 0 20px;">
-              <p>Software Developer Support Team</p>
-
-              <p>HMRC CDIO EPS | Enterprise Integration Services</p>
-
-              <p><a href = "mailto: SDSTeam_hmrc.gov.uk">Email:SDSTeam_hmrc.gov.uk</a></p>
-
+              <a title="regards" style="font-size: 15px;  text-decoration: none; color: #000000;">Kind regards,</a>
               <p></p>
 
+              <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">
+                  <tr>
+                      <td width="30" style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0;">
+                      <a title="Go to the GOV.UK homepage" style="font-size: 30px; font-weight: bold; text-decoration: none; color: #000000;">
+                          <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/icons/crests/hmrc_crest_27px_x2.png" width="30" alt="" style="margin: 6px 6px 0 20px;">
+                      </a>
+                      </td>
+                      <td style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0;">
+                          <a title="sig1" style="font-size: 15px;  text-decoration: none; color: #000000;">Software Developer Support Team</a>
+                          <a title="sig2" style="font-size: 15px;  text-decoration: none; color: #000000;">HMRC CDIO EPS | Enterprise Integration Services</a>
+                          <a title="sig3" style="font-size: 15px;  text-decoration: none; color: #000000;"><a href = "mailto: SDSTeam_hmrc.gov.uk">Email:SDSTeam_hmrc.gov.uk</a></a>
+                      </td>
+                  </tr>
+              </table>
+<!--              <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/icons/crests/hmrc_crest_27px_x2.png" height="26" style="border-left: solid 2px #009390; padding-left: 6px; margin: 5px 6px 0 20px;">-->
+<!--              <p>Software Developer Support Team</p>-->
 
-              <p style="background-color: yellow"><b>Subscriber services</b></p>
+<!--              <p>HMRC CDIO EPS | Enterprise Integration Services</p>-->
 
-              <p style="background-color: #FFFF00; margin: 0; padding: 0;">Manage the emails you receive from us in your <a href="https://developer.service.hmrc.gov.uk/api-documentation">Developer Hub</a> account under ‘Email preferences’.</p>
+<!--              <p><a href = "mailto: SDSTeam_hmrc.gov.uk">Email:SDSTeam_hmrc.gov.uk</a></p>-->
+
+<!--              <p></p>-->
+
+
+              <p><b>Subscriber services</b></p>
+
+              <p>Manage the emails you receive from us in your <a href="https://developer.service.hmrc.gov.uk/api-documentation">Developer Hub</a> account under ‘Email preferences’.</p>
               </body>
               <p></p>
 
