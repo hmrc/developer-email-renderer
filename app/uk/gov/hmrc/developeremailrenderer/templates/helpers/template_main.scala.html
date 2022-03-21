@@ -86,7 +86,7 @@
                   <tr>
                       <td width="30" style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0;">
                       <a title="Go to the GOV.UK homepage" style="font-size: 30px; font-weight: bold; text-decoration: none; color: #000000;">
-                          <img src="./logo.png" width="30" alt="" style="margin: 6px 6px 0 20px;">
+                          <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/icons/crests/hmrc_crest_27px_x2.png" width="30" alt="" style="margin: 6px 6px 0 20px;">
                       </a>
                       </td>
                       <td style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0;">
@@ -106,15 +106,14 @@
 <!--              <p></p>-->
 
 
-              <p><b>Subscriber services</b></p>
-
-              <p>Manage the emails you receive from us in your <a href="https://developer.service.hmrc.gov.uk/api-documentation">Developer Hub</a> account under ‘Email preferences’.</p>
-              </body>
-              <p></p>
+              <p><b>Subscriber services</b><br></p>
+              <p style="font-size: 12px; margin: 0; padding: 0;"><span>Manage the emails you receive from us in your <a href="https://developer.service.hmrc.gov.uk/api-documentation">Developer Hub</a> account under ‘Email preferences’.</span></p>
 
               <p><b>HM Revenue &amp; Customs</b></p>
 
               <p>If you have any doubt about the authenticity of an email you receive which claims to come from HM Revenue &amp; Customs (HMRC), please do not follow any links within the email, disclose any personal details or respond to it. Instead forward it to us at phishing_hmrc.gov.uk</p>
+              </body>
+
           </td>
         </tr>
    }
