@@ -18,48 +18,50 @@
 
 @(params: Map[String, Any], title: String, showFooter: String = "true", footerMessage: Option[Html] = None, showHmrcBanner: String = "true")(content: Html)
 <!DOCTYPE html>
-<html>
+<html xmlns:color="http://www.w3.org/1999/xhtml">
   <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 
     <title>@title</title>
   </head>
-  <body style="background-color: #DEE0E2; margin: 0; padding: 0;">
-    <div id="background" style="background-color: #DEE0E2; margin: 0; overflow: hidden;">
+  <body style="background-color: #FFFFFF; margin: 0; padding: 0;">
+    <div id="background" style="background-color: #FFFFFF; margin: 0; overflow: hidden;">
       <table id="body" cellspacing="0" cellpadding="0" style="margin: 30px auto; max-width: 600px;">
         <tr id="header">
   <td style="font-family: Helvetica, Arial, sans-serif;">
     <table width="100%" cellspacing="0" cellpadding="0" style="background: #000000;">
       <tr>
           <td width="30" style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0; border-bottom: solid 10px @{params("borderColour")};">
-              <a href="https://www.gov.uk/" title="Go to the GOV.UK homepage" style="font-size: 30px; font-weight: bold; text-decoration: none; color: #FFFFFF;">
+              <a title="Go to the GOV.UK homepage" style="font-size: 30px; font-weight: bold; text-decoration: none; color: #FFFFFF;">
                   <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/gov.uk_logotype_crown.png" width="30" alt="" style="margin: 6px 6px 0 20px;">
               </a>
           </td>
           <td style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0; border-bottom: solid 10px @{params("borderColour")};">
-            <a href="https://www.gov.uk/" title="Go to the GOV.UK homepage" style="font-size: 30px; font-weight: bold; text-decoration: none; color: #FFFFFF;">GOV.UK</a>
+            <a title="Go to the GOV.UK homepage" style="font-size: 30px; font-weight: bold; text-decoration: none; color: #FFFFFF;">HM Revenue & Customs Software Developer Support Team</a>
           </td>
       </tr>
     </table>
+      <p></p>
+      <p style="background-color: #FFFF00; margin: 0; padding: 0;"><span>Manage the emails you receive from us in your <a href="https://developer.service.hmrc.gov.uk/api-documentation">Developer Hub</a> account under ‘Email preferences’.</span></p>
   </td>
 </tr>
 
-        @if(showHmrcBanner == "true") { <tr id="tagline">
-  <td style="font-family: Helvetica, Arial, sans-serif;">
-    <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">
-      <tr>
-        <td width="34" style="font-family: Helvetica, Arial, sans-serif; padding: 10px 0; font-size: 18px; border-bottom: solid 1px #808080;">
-          <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/icons/crests/hmrc_crest_27px_x2.png" height="26" style="border-left: solid 2px #009390; padding-left: 6px; margin: 5px 6px 0 20px;">
-        </td>
-        <td style="font-family: Helvetica, Arial, sans-serif; padding: 10px 0; font-size: 18px; border-bottom: solid 1px #808080;">
-            HM Revenue &amp; Customs
-        </td>
-      </tr>
-    </table>
-  </td>
-</tr>
- }
+<!--        @if(showHmrcBanner == "true") { <tr id="tagline">-->
+<!--  <td style="font-family: Helvetica, Arial, sans-serif;">-->
+<!--    <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">-->
+<!--      <tr>-->
+<!--        <td width="34" style="font-family: Helvetica, Arial, sans-serif; padding: 10px 0; font-size: 18px; border-bottom: solid 1px #FFFFFF;">-->
+<!--          <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/icons/crests/hmrc_crest_27px_x2.png" height="26" style="border-left: solid 2px #009390; padding-left: 6px; margin: 5px 6px 0 20px;">-->
+<!--        </td>-->
+<!--        <td style="font-family: Helvetica, Arial, sans-serif; padding: 10px 0; font-size: 18px; border-bottom: solid 1px #808080;">-->
+<!--            HM Revenue &amp; Customs-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--    </table>-->
+<!--  </td>-->
+<!--</tr>-->
+<!-- }-->
         <tr id="contents">
           <td style="font-family: Helvetica, Arial, sans-serif;">
             <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">
@@ -74,27 +76,32 @@
     @if(showFooter == "true") {
         <tr id="footer" style="font-size: 14px; color: #666666;">
           <td style="font-family: Helvetica, Arial, sans-serif;">
-            <table width="100%" cellspacing="0" cellpadding="0">
-              <tr>
-                  <td colspan="75%" style="font-family: Helvetica, Arial, sans-serif; padding: 20px;">
-                      @if(footerMessage.isDefined) {
-                          @footerMessage<br><br>
-                      }
-                      If you&#8217;re unsure an email is from HMRC:
-                          <ul style="margin: 5px 0 0; padding-left: 20px;">
-                              <li style="margin-bottom: 5px;">
-                                  Do not reply to it or click on any links
-                              </li>
-                              <li style="margin-bottom: 5px;">
-                                  Report the suspicious email to HMRC - to find out how, go to GOV.UK and search for 'Avoid and report internet scams and phishing'
-                              </li>
-                          </ul>
-                  </td>
-                  <td colspan="25%" align="right" style="font-family: Helvetica, Arial, sans-serif; padding: 20px;">
-                        <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/govuk-crest-2x.png" width="150">
-                  </td>
-              </tr>
-            </table>
+              <p>Thank you for your cooperation.</p>
+
+              <p>Kind regards,</p>
+
+              <p></p>
+
+              <p></p>
+              <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/icons/crests/hmrc_crest_27px_x2.png" height="26" style="border-left: solid 2px #009390; padding-left: 6px; margin: 5px 6px 0 20px;">
+              <p>Software Developer Support Team</p>
+
+              <p>HMRC CDIO EPS | Enterprise Integration Services</p>
+
+              <p><a href = "mailto: SDSTeam_hmrc.gov.uk">Email:SDSTeam_hmrc.gov.uk</a></p>
+
+              <p></p>
+
+
+              <p style="background-color: yellow"><b>Subscriber services</b></p>
+
+              <p style="background-color: #FFFF00; margin: 0; padding: 0;">Manage the emails you receive from us in your <a href="https://developer.service.hmrc.gov.uk/api-documentation">Developer Hub</a> account under ‘Email preferences’.</p>
+              </body>
+              <p></p>
+
+              <p><b>HM Revenue &amp; Customs</b></p>
+
+              <p>If you have any doubt about the authenticity of an email you receive which claims to come from HM Revenue &amp; Customs (HMRC), please do not follow any links within the email, disclose any personal details or respond to it. Instead forward it to us at phishing_hmrc.gov.uk</p>
           </td>
         </tr>
    }
