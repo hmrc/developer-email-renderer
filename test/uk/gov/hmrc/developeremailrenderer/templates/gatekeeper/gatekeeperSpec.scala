@@ -33,6 +33,7 @@ class gatekeeperSpec extends WordSpec with Matchers {
     "staticAssetUrlPrefix" -> "http://uri",
     "staticAssetVersion"   -> "v1",
     "subject"              -> "This is the subject.",
+    "logoAssetUrlPrefix"   -> "http://localhost:9680/api-documentation/assets/images/",
     "borderColour"         -> "#005EA5",
     "showFooter"           -> "true",
     "showHmrcBanner"       -> "true",
