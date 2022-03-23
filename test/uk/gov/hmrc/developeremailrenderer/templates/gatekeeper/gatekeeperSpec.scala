@@ -45,7 +45,7 @@ class gatekeeperSpec extends WordSpec with Matchers {
     "render as" in new TestCase {
       val renderedHtml = gatekeeper.html.gatekeeper.render(templateParams)
       renderedHtml.contentType should include("text/html")
-      renderedHtml.body should include("<p>This is the body.</p>")
+      renderedHtml.body should include("<p><br></p>This is the body.</p>")
     }
   }
 
