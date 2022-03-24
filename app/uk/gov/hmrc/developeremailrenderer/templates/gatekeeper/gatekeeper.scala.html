@@ -19,6 +19,6 @@
 @uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, params("subject").toString(), params("showFooter").toString(), None, params("showHmrcBanner").toString()) {
 
 
-@Markdown("Dear " + params("firstName").toString() + " " + params("lastName").toString() + ",\n" + "\n" + params("body").toString())
+@Markdown("Dear " + params("firstName").toString() + " " + params("lastName").toString() + "," + "\n\n<br>" + params("body").toString())
 
 }
