@@ -1,8 +1,5 @@
 import _root_.play.core.PlayVersion
-import com.typesafe.sbt.digest.Import._
-import com.typesafe.sbt.uglify.Import._
 import com.typesafe.sbt.web.Import._
-import net.ground5hark.sbt.concat.Import._
 import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.routes.RoutesKeys.routesGenerator
 import sbt.Keys.{ baseDirectory, unmanagedSourceDirectories, _ }
@@ -14,30 +11,12 @@ import bloop.integrations.sbt.BloopDefaults
 
 lazy val microservice = (project in file("."))
   .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin)
-  .settings(
-    Concat.groups := Seq(
-      "javascripts/apis-app.js" -> group(
-        (baseDirectory.value / "app" / "assets" / "javascripts") ** "*.js"
-      )
-    ),
-    uglifyCompressOptions := Seq(
-      "unused=false",
-      "dead_code=true"
-    ),
-    includeFilter in uglify := GlobFilter("apis-*.js"),
-    pipelineStages := Seq(digest),
-    pipelineStages in Assets := Seq(
-      concat,
-      uglify
-    ),
-    scalacOptions += "-Ypartial-unification",
-  )
   .settings(scalaSettings: _*)
   .settings(publishingSettings: _*)
   .settings(SilencerSettings(): _*)
   .settings(
     targetJvm := "jvm-1.8",
-    scalaVersion := "2.12.12",
+    scalaVersion := "2.12.15",
     name := appName,
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,

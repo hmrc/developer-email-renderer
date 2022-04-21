@@ -16,12 +16,15 @@
 
 package uk.gov.hmrc.developeremailrenderer.controllers.model
 
-import org.scalatest.{ Matchers, OptionValues, WordSpecLike }
-import play.api.libs.json._
-
 import java.util.Base64
 
-class RenderResultSpec extends WordSpecLike with Matchers with OptionValues {
+import org.scalatest.OptionValues
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import play.api.libs.json._
+
+
+class RenderResultSpec extends AnyWordSpecLike with Matchers with OptionValues {
   "RenderResult" should {
 
     def decode(value: String): String = new String(Base64.getDecoder.decode(value), "UTF-8")

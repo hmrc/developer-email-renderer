@@ -18,13 +18,13 @@ package preview
 
 import com.google.inject.Inject
 import javax.inject.Singleton
-import play.api.mvc.{ Action, MessagesControllerComponents }
+import play.api.mvc.MessagesControllerComponents
 import play.twirl.api.Html
 import play.utils.UriEncoding
 import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority.MessagePriority
-import uk.gov.hmrc.developeremailrenderer.domain.{ MessagePriority, MessageTemplate }
+import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate}
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
-import uk.gov.hmrc.play.bootstrap.controller.FrontendController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 @Singleton
 class PreviewController @Inject()(mcc: MessagesControllerComponents, preview: Preview) extends FrontendController(mcc) {

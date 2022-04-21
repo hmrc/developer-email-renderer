@@ -34,11 +34,12 @@ package uk.gov.hmrc.developeremailrenderer.services
 
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.{ any, anyString }
-import org.mockito.Mockito._
 import org.mockito.MockitoSugar
 
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{ Matchers, OptionValues, WordSpecLike }
+import org.scalatest.OptionValues
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.Configuration
 import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
@@ -48,13 +49,12 @@ import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.{ AuditConnector, AuditResult }
 import uk.gov.hmrc.play.audit.model.DataEvent
-import views.{ html, txt }
 import uk.gov.hmrc.developeremailrenderer.model.Language
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ ExecutionContext, Future }
 
-class TemplateRendererSpec extends WordSpecLike with Matchers with OptionValues with MockitoSugar with ScalaFutures {
+class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValues with MockitoSugar with ScalaFutures {
   "The template renderer" should {
     "render an existing template using the common parameters" in new TestCase {
       when(locatorMock.findTemplate(templateId)).thenReturn(Some(validTemplate))

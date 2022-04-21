@@ -17,22 +17,22 @@
 package uk.gov.hmrc.developeremailrenderer.services
 
 import com.google.inject.Inject
-import play.api.{ Configuration, Logger }
+import play.api.Configuration
 import play.twirl.api.Format
 import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
-import uk.gov.hmrc.developeremailrenderer.domain.{ ErrorMessage, MissingTemplateId, TemplateRenderFailure }
+import uk.gov.hmrc.developeremailrenderer.domain.{ErrorMessage, MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.model.Language
-import uk.gov.hmrc.developeremailrenderer.model.Language.{ English, Welsh }
+import uk.gov.hmrc.developeremailrenderer.model.Language.{English, Welsh}
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.{ AuditConnector, AuditResult }
+import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
 import uk.gov.hmrc.play.audit.model.DataEvent
 import uk.gov.hmrc.play.audit.model.EventTypes.Succeeded
 import util.ApplicationLogger
 
-import scala.concurrent.{ ExecutionContext, Future }
-import scala.util.{ Failure, Success, Try }
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success, Try}
 
 class TemplateRenderer @Inject()(
   configuration: Configuration,

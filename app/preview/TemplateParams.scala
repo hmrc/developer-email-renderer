@@ -16,9 +16,7 @@
 
 package preview
 
-import java.util.{ Base64, UUID }
-import play.api.libs.json.Json.{ parse, stringify }
-import preview.TemplateParams.newMessageAlert_Names
+import java.util.UUID
 
 object TemplateParams {
   val exampleLinkWithRandomId = s"http://host:8080/your/link/${UUID.randomUUID}"
