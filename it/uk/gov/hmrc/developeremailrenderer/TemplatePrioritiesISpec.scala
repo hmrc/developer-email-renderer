@@ -16,32 +16,18 @@
 
 package uk.gov.hmrc.developeremailrenderer
 
-import org.scalactic.source.Position
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.prop.TableDrivenPropertyChecks
-import org.scalatest.{ Matchers, OptionValues, WordSpecLike }
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatest.OptionValues
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
-import org.scalatestplus.play.{ ServerProvider, WsScalaTestClient }
-import play.api.libs.json._
-import play.api.libs.ws.WSClient
+import org.scalatestplus.play.{ServerProvider, WsScalaTestClient}
 import uk.gov.hmrc.play.http.test.ResponseMatchers
 
 class TemplatePrioritiesISpec
-    extends WordSpecLike with Matchers with OptionValues with WsScalaTestClient with GuiceOneServerPerSuite
+    extends AnyWordSpecLike with Matchers with OptionValues with WsScalaTestClient with GuiceOneServerPerSuite
     with ScalaFutures with ResponseMatchers with ServerProvider with TableDrivenPropertyChecks {
-//  "Rendered templates" should {
-//
-//    implicit lazy val wsc: WSClient = app.injector.instanceOf[WSClient]
-//    implicit lazy val pos: Position = Position.here
-//
-//    forAll(TestTemplates.standard) { (templateId, params) =>
-//      s"supply a priority for templateId '$templateId'" in {
-//        val response = wsUrl(s"/templates/$templateId").post(Json.obj("parameters" -> params)).futureValue
-//        response.status shouldBe 200
-//        (response.json \ "priority").asOpt[String] shouldBe Some("standard")
-//      }
-//    }
-//  }
 
   object TestTemplates {
 

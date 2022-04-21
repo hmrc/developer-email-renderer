@@ -17,7 +17,6 @@
 package uk.gov.hmrc.developeremailrenderer.controllers
 
 import com.google.inject.Inject
-import play.api.Logger
 import play.api.libs.json.{ JsValue, Json }
 import play.api.mvc._
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderRequest

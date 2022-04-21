@@ -17,10 +17,12 @@
 package uk.gov.hmrc.developeremailrenderer.templates.gatekeeper
 
 import junit.framework.TestCase
-import org.scalatest.{ Matchers, WordSpec }
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+
 import uk.gov.hmrc.developeremailrenderer.templates.gatekeeper
 
-class gatekeeperSpec extends WordSpec with Matchers {
+class gatekeeperSpec extends AnyWordSpec with Matchers {
 
   val applicationName = "Application Name"
   val role = "role"
