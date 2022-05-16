@@ -35,7 +35,7 @@ class PreviewSpec extends AnyWordSpecLike with Matchers with OptionValues with G
     "generate a  preview item for each template id that resolves to a message template" in {
       val templates: Seq[MessageTemplate] = List("does not exist", "also does not exist").map { id =>
         MessageTemplate
-          .create(id, "", ServiceIdentifier.SelfAssessment, id, (_ => ???): Body.Plain, (_ => ???): Body.Html)
+          .create(id, "", ServiceIdentifier.GateKeeper, id, (_ => ???): Body.Plain, (_ => ???): Body.Html)
       }
       val result = PreviewGroup.createPreviewGroup("Self Assessment", templates)
       result.name shouldBe "Self Assessment"

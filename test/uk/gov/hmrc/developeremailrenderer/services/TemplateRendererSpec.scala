@@ -33,9 +33,8 @@
 package uk.gov.hmrc.developeremailrenderer.services
 
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers.{ any, anyString }
+import org.mockito.ArgumentMatchers.{any, anyString}
 import org.mockito.MockitoSugar
-
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.OptionValues
 import org.scalatest.matchers.should.Matchers
@@ -43,16 +42,16 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.Configuration
 import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
-import uk.gov.hmrc.developeremailrenderer.domain.{ MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure }
-import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.SelfAssessment
+import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure}
+import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.{ AuditConnector, AuditResult }
+import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
 import uk.gov.hmrc.play.audit.model.DataEvent
 import uk.gov.hmrc.developeremailrenderer.model.Language
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValues with MockitoSugar with ScalaFutures {
   "The template renderer" should {
@@ -281,7 +280,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
     val validTemplate = MessageTemplate.create(
       templateId = templateId,
       fromAddress = "from@test",
-      service = SelfAssessment,
+      service = GateKeeper,
       subject = "a subject",
       plainTemplate = txt.templateSample.f,
       htmlTemplate = html.templateSample.f,
@@ -290,7 +289,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
     val validRenderedResult = RenderResult(
       fromAddress = "from@test",
-      service = "sa",
+      service = "gatekeeper",
       subject = "a subject",
       plain = "Test template with parameter value: VALUE using common parameters: commonValue",
       html = "<p>Test template with parameter value: VALUE using common parameters: commonValue</p>",
