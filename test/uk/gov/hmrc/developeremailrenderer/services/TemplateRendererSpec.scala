@@ -104,36 +104,6 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       )
     }
 
-    "return welsh template if template is in WelshTemplatesByLangPreference and language preferences set to welsh" in new TestCase {
-      val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
-
-      when(auditConnector.sendEvent(any[DataEvent])(any[HeaderCarrier], any[ExecutionContext]))
-        .thenReturn(Future.successful(AuditResult.Success))
-      when(preferencesConnector.languageByEmail(anyString())(any[HeaderCarrier], any()))
-        .thenReturn(Future.successful(Language.Welsh))
-      override val templateRenderer =
-        new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
-          override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
-        }
-
-      templateRenderer.languageTemplateId(engTemplateId, Some("test@test.com")).futureValue shouldBe welshTemplateId
-
-      verify(auditConnector)
-        .sendEvent(dataEventArgumentCaptor.capture())(any[HeaderCarrier], any[ExecutionContext])
-
-      dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
-      dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
-      dataEventArgumentCaptor.getValue.detail shouldBe Map(
-        "email"              -> "test@test.com",
-        "description"        -> "Language preference found",
-        "originalTemplateId" -> engTemplateId,
-        "selectedTemplateId" -> welshTemplateId,
-        "language"           -> "Welsh",
-        "engTemplateId"      -> "welshTemplateId"
-      )
-    }
 
     "return english template if template is in WelshTemplatesByLangPreference and language preferences set to english" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
@@ -173,12 +143,12 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       when(auditConnector.sendEvent(any[DataEvent])(any[HeaderCarrier], any[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
       when(preferencesConnector.languageByEmail(anyString())(any[HeaderCarrier], any()))
-        .thenReturn(Future.successful(Language.Welsh))
+        .thenReturn(Future.successful(Language.English))
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
           override val locator = locatorMock
-          override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
+          override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> engTemplateId)
           override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
         }
 
@@ -195,7 +165,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
         "originalTemplateId" -> templateId,
         "selectedTemplateId" -> templateId,
         "language"           -> "English",
-        "engTemplateId"      -> "welshTemplateId"
+        "engTemplateId"      -> "engTemplateId"
       )
     }
 

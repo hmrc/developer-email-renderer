@@ -21,24 +21,6 @@ import akka.http.scaladsl.model.{ StatusCode, StatusCodes }
 import scala.language.reflectiveCalls
 import play.twirl.api.Html
 
-object Slugify {
-  def apply(text: String): String = makeSlug(text)
-
-  def apply(obj: { def value(): String }): String = Option(obj).fold("")(obj => makeSlug(obj.value()))
-
-  private def makeSlug(text: String) = Option(text).fold("") { obj =>
-    obj.replaceAll("[^\\w\\s]", "").replaceAll("\\s+", "-").toLowerCase
-  }
-}
-
-object Val {
-  def apply(obj: String): String = Option(obj).getOrElse("")
-
-  def apply(obj: Option[String]): String = obj.getOrElse("")
-
-  def apply(obj: { def value(): String }): String = Option(obj).fold("")(_.value())
-}
-
 object Markdown {
 
   def apply(text: String): Html = Html(process(text))
