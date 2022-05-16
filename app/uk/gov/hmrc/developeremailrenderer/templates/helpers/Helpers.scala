@@ -69,23 +69,3 @@ object Markdown {
   private def process(text: String) = Processor.process(text, configuration.build)
 }
 
-object HttpStatus {
-  def apply(statusCode: String): String = apply(statusCode.toInt)
-
-  def apply(statusCode: Int): String = {
-
-    val responseStatus: StatusCode = try {
-      StatusCode.int2StatusCode(statusCode)
-    } catch {
-      case _: RuntimeException => StatusCodes.custom(statusCode, "non-standard", "")
-    }
-
-    s"$statusCode (${responseStatus.reason})"
-  }
-}
-
-object AvailabilityPhrase {
-  val yes = "Yes"
-  val yesPrivateTrial = "Yes - private trial"
-  val no = "No"
-}

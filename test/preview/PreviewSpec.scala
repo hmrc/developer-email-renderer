@@ -16,12 +16,18 @@
 
 package preview
 
+import org.mockito.ArgumentMatchers.{any, anyString}
+import org.mockito.Mockito
+import org.mockito.Mockito.when
 import org.scalatest.OptionValues
 import org.scalatest.matchers.should.Matchers
+import org.scalatest.prop.TableDrivenPropertyChecks.forAll
 import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import uk.gov.hmrc.developeremailrenderer.domain.{Body, MessagePriority, MessageTemplate}
-import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier
+import uk.gov.hmrc.developeremailrenderer.domain.{Body, MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure}
+import uk.gov.hmrc.developeremailrenderer.services.TemplateRenderer
+import uk.gov.hmrc.developeremailrenderer.templates.{ServiceIdentifier, TemplateLocator}
+import org.scalatest.prop.TableDrivenPropertyChecks._
 
 class PreviewSpec extends AnyWordSpecLike with Matchers with OptionValues with GuiceOneAppPerSuite {
 
@@ -45,22 +51,30 @@ class PreviewSpec extends AnyWordSpecLike with Matchers with OptionValues with G
     }
   }
 
-//  "The preview" should {
-//
-//    def allTemplates = TemplateLocator.all
-//
-//    val templateRenderer = app.injector.instanceOf[TemplateRenderer]
-//
-//    forAll(Table.apply("templateId", allTemplates: _*)) { mt: MessageTemplate =>
-//      s"be able to render ${mt.templateId}" in {
-//
-//        val parameters = TemplateParams.exampleParams
-//          .getOrElse(mt.templateId, Map.empty)
-//
-//        templateRenderer.render(mt.templateId, parameters) should not matchPattern {
-//          case Left(TemplateRenderFailure(reason)) =>
-//        }
-//      }
-//    }
-//  }
+  "The preview" should {
+
+    def allTemplates = TemplateLocator.all
+
+    val templateRenderer = app.injector.instanceOf[TemplateRenderer]
+
+    forAll(Table.apply("templateId", allTemplates: _*)) { mt: MessageTemplate =>
+      s"be able to render ${mt.templateId}" in {
+
+        val parameters = TemplateParams.exampleParams
+          .getOrElse(mt.templateId, TemplateParams.exampleParams.getOrElse(mt.templateId, Map.empty))
+
+        templateRenderer.render(mt.templateId, parameters) should not matchPattern {
+          case Left(TemplateRenderFailure(reason)) =>
+        }
+      }
+    }
+
+    val mock: TemplateRenderer = Mockito.mock(classOf[TemplateRenderer])
+    "return an error string if the template not found" in {
+      when(mock.render(anyString(), any[Map[String, String]]()))
+        .thenReturn(Left(MissingTemplateId("12")))
+      val preview = new Preview(mock)
+      preview.html("", Map.empty) shouldBe "failed to rendered template with id == 12"
+    }
+  }
 }

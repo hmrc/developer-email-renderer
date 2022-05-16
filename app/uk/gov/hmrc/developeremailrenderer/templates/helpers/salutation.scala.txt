@@ -1,3 +1,0 @@
-@(params: Map[String, Any], overrideSalutation: Option[String] = None, isWelsh: Boolean = false)
-@import uk.gov.hmrc.developeremailrenderer.templates.helpers.SalutationHelper._
-@overrideSalutation.getOrElse(salutationFrom(params, isWelsh))

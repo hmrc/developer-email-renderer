@@ -35,7 +35,11 @@ object TemplateParams {
     "gatekeeper" -> Map(
       "subject" -> "Sample subject",
       "body"    -> "Sample Body",
-      "service" -> "gatekeeper"
+      "service" -> "gatekeeper",
+      "showFooter" -> "true",
+      "showHmrcBanner" -> "true",
+      "firstName" -> "abc",
+      "lastName" -> "def"
     )
   )
 }
