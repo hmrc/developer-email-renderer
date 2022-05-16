@@ -25,10 +25,6 @@ object Markdown {
 
   def apply(text: String): Html = Html(process(text))
 
-  def apply(text: Option[String]): Html = apply(text.getOrElse(""))
-
-  def apply(obj: { def value(): String }): Html = Option(obj).fold(emptyHtml)(node => apply(node.value()))
-
   import com.github.rjeschke.txtmark.{ Configuration, Processor }
   import org.markdown4j._
 

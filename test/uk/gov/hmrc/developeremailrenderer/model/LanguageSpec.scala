@@ -16,21 +16,21 @@
 
 package uk.gov.hmrc.developeremailrenderer.model
 
-import enumeratum.{ Enum, EnumEntry }
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 import play.api.libs.json._
+import uk.gov.hmrc.developeremailrenderer.model.Language.English
 
-sealed abstract class Language(override val entryName: String) extends EnumEntry
-
-case object Language extends Enum[Language] {
-
-  val values = findValues
-
-  case object English extends Language("en")
-
-  implicit val languageReads = Reads[Language] {
-    case _ => JsSuccess(Language.English)
-  }
-  implicit val languageWrites = new Writes[Language] {
-    override def writes(e: Language): JsValue = JsString(e.entryName)
+class LanguageSpec extends AnyWordSpec with Matchers {
+  "Language" should {
+    "write to Json" in {
+      Json.toJson[Language](English) shouldBe JsString("en")
+    }
+    "read from Json" in {
+      JsString("en").as[Language] shouldBe English
+      JsString("jpn").as[Language] shouldBe English
+      JsString("En").as[Language] shouldBe English
+      Json.obj("reason" -> "reason", "status" -> "Rendering of template failed").as[Language] shouldBe English
+    }
   }
 }

@@ -63,7 +63,10 @@ coverageFailOnMinimum := true
 coverageExcludedPackages := Seq(
   "<empty>",
   "com.kenshoo.play.metrics",
+  ".*Reverse.*",
   ".*definition.*",
+  ".*(config|testonly).*",
+  ".*(BuildInfo|Routes).*",
   "prod",
   "testOnlyDoNotUseInAppConf",
   "app",
