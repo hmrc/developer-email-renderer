@@ -20,7 +20,7 @@ import scoverage.ScoverageKeys
 
 object ScoverageSettings {
   def apply(): Seq[Def.Setting[_ >: String with Double with Boolean]] =
-    Seq(ScoverageKeys.coverageMinimumStmtTotal := 94.06,
+    Seq(ScoverageKeys.coverageMinimumStmtTotal := 93.00,
       ScoverageKeys.coverageFailOnMinimum := true,
       ScoverageKeys.coverageHighlighting := true,
       parallelExecution in ConfigKey.configurationToKey(Test) := false
