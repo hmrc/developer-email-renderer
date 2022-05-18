@@ -28,11 +28,8 @@ trait TemplateLocator {
   lazy val all: Seq[MessageTemplate] = templateGroups.values.flatten.toSeq
 
   def findTemplate(templateId: String): Option[MessageTemplate] =
-    all.find(_.templateId == templateId) orElse {
-      all.find(_.templateId == templateId.stripSuffix(TemplateLocator.WELSH_SUFFIX))
-    }
+    all.find(_.templateId == templateId)
 }
 
 object TemplateLocator extends TemplateLocator {
-  final val WELSH_SUFFIX = "_cy"
 }

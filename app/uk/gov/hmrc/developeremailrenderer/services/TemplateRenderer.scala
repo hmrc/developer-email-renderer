@@ -23,7 +23,7 @@ import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
 import uk.gov.hmrc.developeremailrenderer.domain.{ErrorMessage, MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.model.Language
-import uk.gov.hmrc.developeremailrenderer.model.Language.{English, Welsh}
+import uk.gov.hmrc.developeremailrenderer.model.Language.English
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
@@ -110,7 +110,6 @@ class TemplateRenderer @Inject()(
       preferencesConnector.languageByEmail(email).map { lang =>
         val selectedTemplateId = lang match {
           case English => originalTemplateId
-          case Welsh   => welshTemplateId
         }
         sendLanguageEvents(email, lang, originalTemplateId, selectedTemplateId, "Language preference found")
         selectedTemplateId

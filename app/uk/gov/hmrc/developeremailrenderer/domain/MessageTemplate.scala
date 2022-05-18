@@ -68,23 +68,6 @@ object MessageTemplate {
       priority
     )
 
-  def createWithDynamicFromAddress(
-    templateId: String,
-    fromAddress: Map[String, String] => String,
-    service: ServiceIdentifier,
-    subject: String,
-    plainTemplate: Body.Plain,
-    htmlTemplate: Body.Html,
-    priority: Option[MessagePriority] = None) =
-    MessageTemplate(
-      templateId,
-      FromAddress(fromAddress),
-      service,
-      Subject.fromPlainString(subject),
-      plainTemplate,
-      htmlTemplate,
-      priority
-    )
 }
 
 case class Subject(f: Map[String, String] => String) {

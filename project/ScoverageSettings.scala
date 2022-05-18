@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@(item: preview.PreviewListItem)
+import sbt.Keys.parallelExecution
+import sbt._
+import scoverage.ScoverageKeys
 
-(<a href="/developer-email-renderer/test-only/preview/html/@{item.templateId}@{item.queryString}">HTML</a>)
-(<a href="/developer-email-renderer/test-only/preview/text/@{item.templateId}@{item.queryString}">Text</a>)
-(<a href="/developer-email-renderer/test-only/preview/source/@{item.templateId}@{item.queryString}">Source</a>)
+object ScoverageSettings {
+  def apply(): Seq[Def.Setting[_ >: String with Double with Boolean]] =
+    Seq(ScoverageKeys.coverageMinimumStmtTotal := 93.00,
+      ScoverageKeys.coverageFailOnMinimum := true,
+      ScoverageKeys.coverageHighlighting := true,
+      parallelExecution in ConfigKey.configurationToKey(Test) := false
+    )
+}

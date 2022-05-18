@@ -33,9 +33,8 @@
 package uk.gov.hmrc.developeremailrenderer.services
 
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers.{ any, anyString }
+import org.mockito.ArgumentMatchers.{any, anyString}
 import org.mockito.MockitoSugar
-
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.OptionValues
 import org.scalatest.matchers.should.Matchers
@@ -43,16 +42,16 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.Configuration
 import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
-import uk.gov.hmrc.developeremailrenderer.domain.{ MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure }
-import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.SelfAssessment
+import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure}
+import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.{ AuditConnector, AuditResult }
+import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
 import uk.gov.hmrc.play.audit.model.DataEvent
 import uk.gov.hmrc.developeremailrenderer.model.Language
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValues with MockitoSugar with ScalaFutures {
   "The template renderer" should {
@@ -105,36 +104,6 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       )
     }
 
-    "return welsh template if template is in WelshTemplatesByLangPreference and language preferences set to welsh" in new TestCase {
-      val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
-
-      when(auditConnector.sendEvent(any[DataEvent])(any[HeaderCarrier], any[ExecutionContext]))
-        .thenReturn(Future.successful(AuditResult.Success))
-      when(preferencesConnector.languageByEmail(anyString())(any[HeaderCarrier], any()))
-        .thenReturn(Future.successful(Language.Welsh))
-      override val templateRenderer =
-        new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
-          override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
-        }
-
-      templateRenderer.languageTemplateId(engTemplateId, Some("test@test.com")).futureValue shouldBe welshTemplateId
-
-      verify(auditConnector)
-        .sendEvent(dataEventArgumentCaptor.capture())(any[HeaderCarrier], any[ExecutionContext])
-
-      dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
-      dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
-      dataEventArgumentCaptor.getValue.detail shouldBe Map(
-        "email"              -> "test@test.com",
-        "description"        -> "Language preference found",
-        "originalTemplateId" -> engTemplateId,
-        "selectedTemplateId" -> welshTemplateId,
-        "language"           -> "Welsh",
-        "engTemplateId"      -> "welshTemplateId"
-      )
-    }
 
     "return english template if template is in WelshTemplatesByLangPreference and language preferences set to english" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
@@ -174,12 +143,12 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       when(auditConnector.sendEvent(any[DataEvent])(any[HeaderCarrier], any[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
       when(preferencesConnector.languageByEmail(anyString())(any[HeaderCarrier], any()))
-        .thenReturn(Future.successful(Language.Welsh))
+        .thenReturn(Future.successful(Language.English))
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
           override val locator = locatorMock
-          override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
+          override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> engTemplateId)
           override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
         }
 
@@ -196,7 +165,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
         "originalTemplateId" -> templateId,
         "selectedTemplateId" -> templateId,
         "language"           -> "English",
-        "engTemplateId"      -> "welshTemplateId"
+        "engTemplateId"      -> "engTemplateId"
       )
     }
 
@@ -281,7 +250,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
     val validTemplate = MessageTemplate.create(
       templateId = templateId,
       fromAddress = "from@test",
-      service = SelfAssessment,
+      service = GateKeeper,
       subject = "a subject",
       plainTemplate = txt.templateSample.f,
       htmlTemplate = html.templateSample.f,
@@ -290,7 +259,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
     val validRenderedResult = RenderResult(
       fromAddress = "from@test",
-      service = "sa",
+      service = "gatekeeper",
       subject = "a subject",
       plain = "Test template with parameter value: VALUE using common parameters: commonValue",
       html = "<p>Test template with parameter value: VALUE using common parameters: commonValue</p>",

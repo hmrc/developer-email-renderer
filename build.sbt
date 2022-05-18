@@ -58,12 +58,14 @@ lazy val microservice = (project in file("."))
 
 lazy val appName = "developer-email-renderer"
 
-coverageMinimum := 31
 coverageFailOnMinimum := true
 coverageExcludedPackages := Seq(
   "<empty>",
   "com.kenshoo.play.metrics",
+  ".*Reverse.*",
   ".*definition.*",
+  ".*(config|testonly).*",
+  ".*(BuildInfo|Routes).*",
   "prod",
   "testOnlyDoNotUseInAppConf",
   "app",

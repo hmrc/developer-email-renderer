@@ -21,31 +21,9 @@ import akka.http.scaladsl.model.{ StatusCode, StatusCodes }
 import scala.language.reflectiveCalls
 import play.twirl.api.Html
 
-object Slugify {
-  def apply(text: String): String = makeSlug(text)
-
-  def apply(obj: { def value(): String }): String = Option(obj).fold("")(obj => makeSlug(obj.value()))
-
-  private def makeSlug(text: String) = Option(text).fold("") { obj =>
-    obj.replaceAll("[^\\w\\s]", "").replaceAll("\\s+", "-").toLowerCase
-  }
-}
-
-object Val {
-  def apply(obj: String): String = Option(obj).getOrElse("")
-
-  def apply(obj: Option[String]): String = obj.getOrElse("")
-
-  def apply(obj: { def value(): String }): String = Option(obj).fold("")(_.value())
-}
-
 object Markdown {
 
   def apply(text: String): Html = Html(process(text))
-
-  def apply(text: Option[String]): Html = apply(text.getOrElse(""))
-
-  def apply(obj: { def value(): String }): Html = Option(obj).fold(emptyHtml)(node => apply(node.value()))
 
   import com.github.rjeschke.txtmark.{ Configuration, Processor }
   import org.markdown4j._
@@ -69,23 +47,3 @@ object Markdown {
   private def process(text: String) = Processor.process(text, configuration.build)
 }
 
-object HttpStatus {
-  def apply(statusCode: String): String = apply(statusCode.toInt)
-
-  def apply(statusCode: Int): String = {
-
-    val responseStatus: StatusCode = try {
-      StatusCode.int2StatusCode(statusCode)
-    } catch {
-      case _: RuntimeException => StatusCodes.custom(statusCode, "non-standard", "")
-    }
-
-    s"$statusCode (${responseStatus.reason})"
-  }
-}
-
-object AvailabilityPhrase {
-  val yes = "Yes"
-  val yesPrivateTrial = "Yes - private trial"
-  val no = "No"
-}

@@ -21,5 +21,4 @@ sealed trait ServiceIdentifier extends Product with Serializable {
 }
 object ServiceIdentifier {
   case object GateKeeper extends ServiceIdentifier { override val name = "gatekeeper" }
-  case object SelfAssessment extends ServiceIdentifier { override val name = "sa" }
 }

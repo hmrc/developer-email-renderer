@@ -24,12 +24,41 @@ import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import org.scalatestplus.play.{ServerProvider, WsScalaTestClient}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
+import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals.applicationName
 import uk.gov.hmrc.play.http.test.ResponseMatchers
 
 class RendererControllerISpec
     extends AnyWordSpecLike with Matchers with OptionValues with WsScalaTestClient with GuiceOneServerPerSuite
     with ScalaFutures with ResponseMatchers with ServerProvider {
   "POST /templates/:templateId" should {
+
+
+    "return 200 and yield the rendered template data when supplied a valid templateId thats not defined in WelshTemplatesByLangPreference" in {
+      val params = Map(
+        "applicationName"      -> "gatekeeper",
+        "body"                 -> "This is the body.",
+        "staticAssetUrlPrefix" -> "http://uri",
+        "staticAssetVersion"   -> "v1",
+        "subject"              -> "This is the subject.",
+        "logoAssetUrlPrefix"   -> "http://localhost:9680/api-documentation/assets/images/",
+        "borderColour"         -> "#005EA5",
+        "showFooter"           -> "true",
+        "showHmrcBanner"       -> "true",
+        "firstName"            -> "m",
+        "lastName"             -> "l"
+      )
+      implicit val ws: WSClient = app.injector.instanceOf(classOf[WSClient])
+
+      val response = wsUrl(s"/templates/gatekeeper").post(Json.obj("parameters" -> params))
+      response should have(
+        status(200),
+        jsonProperty(__ \ "fromAddress", "Software Developer Support Team <noreply@tax.service.gov.uk>"),
+        jsonProperty(__ \ "subject", "This is the subject."),
+        jsonProperty(__ \ "service", "gatekeeper"),
+        jsonProperty(__ \ "plain"),
+        jsonProperty(__ \ "html")
+      )
+    }
 
     "return 404 when a non-existent templateId is specified on the path" in {
       implicit lazy val wsc: WSClient = app.injector.instanceOf[WSClient]
