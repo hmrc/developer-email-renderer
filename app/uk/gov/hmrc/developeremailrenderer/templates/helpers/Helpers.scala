@@ -16,34 +16,33 @@
 
 package uk.gov.hmrc.developeremailrenderer.templates.helpers
 
-import akka.http.scaladsl.model.{ StatusCode, StatusCodes }
+import akka.http.scaladsl.model.{StatusCode, StatusCodes}
+import org.commonmark.Extension
+import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.HtmlRenderer
 
 import scala.language.reflectiveCalls
 import play.twirl.api.Html
 
+import java.util
+
 object Markdown {
 
-  def apply(text: String): Html = Html(process(text))
+  import org.commonmark.ext.gfm.tables.TablesExtension;
 
-  import com.github.rjeschke.txtmark.{ Configuration, Processor }
-  import org.markdown4j._
+  val extensions = util.Arrays.asList(TablesExtension.create());
+  val parser = Parser.builder()
+    .extensions(extensions)
+    .build();
+  val renderer = HtmlRenderer.builder()
+    .extensions(extensions)
+    .build();
 
-  private val emptyHtml = Html("")
 
-  private def configuration =
-    Configuration.builder.forceExtentedProfile
-      .registerPlugins(new YumlPlugin, new WebSequencePlugin, new IncludePlugin)
-      .setDecorator(
-        new ExtDecorator()
-          .addStyleClass("list list-bullet", "ul")
-          .addStyleClass("list list-number", "ol")
-          .addStyleClass("code--slim", "code")
-          .addStyleClass("heading-large", "h1")
-          .addStyleClass("heading-medium", "h2")
-          .addStyleClass("heading-small", "h3")
-          .addStyleClass("heading-small", "h4"))
-      .setCodeBlockEmitter(new CodeBlockEmitter)
+  def apply(text: String): Html = {
+    val document = parser.parse(text)
+    Html(Html(renderer.render(document)).toString().replace("<table>", "<table  border= \"1px solid;\">"))
+  }
 
-  private def process(text: String) = Processor.process(text, configuration.build)
 }
 
