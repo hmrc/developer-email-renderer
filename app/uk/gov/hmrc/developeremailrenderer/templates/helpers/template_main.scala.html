@@ -20,6 +20,11 @@
 <!DOCTYPE html>
 <html xmlns:color="http://www.w3.org/1999/xhtml">
   <head>
+   <style>
+     .noborder{
+     border: none;
+   }
+   </style>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <title>@title</title>
@@ -29,16 +34,16 @@
       <table id="body" cellspacing="0" cellpadding="0" style="margin: 30px auto; max-width: 600px;">
         @if(showFooter == "true") {
             <tr id="header">
-              <td style="font-family: Helvetica, Arial, sans-serif;">
+              <td class="noborder" style="font-family: Helvetica, Arial, sans-serif;">
 
                     <table width="100%" cellspacing="10" cellpadding="0" style="background: #000000;">
                       <tr>
-                          <td width="50" style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0; ">
+                          <td class="noborder" width="50" style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0; ">
                               <a title="Go to the GOV.UK homepage" style="font-weight: bold; text-decoration: none; color: #FFFFFF;">
                                   <img src="@{params("staticAssetUrlPrefix")}@{params("staticAssetVersion")}/images/gov.uk_logotype_crown.png" width="30" alt="" style="margin: 6px 6px 0 20px;">
                               </a>
                           </td>
-                          <td style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0; border-bottom: solid 1px ;">
+                          <td class="noborder" style="font-family: Helvetica, Arial, sans-serif; padding: 4px 0; border-bottom: solid 1px ;">
                             <a title="Go to the GOV.UK homepage" style="font-size: 16px; font-weight: bold; text-decoration: none; color: #FFFFFF;">HM Revenue & Customs<br> Software Developer Support Team</a>
                           </td>
                       </tr>
@@ -49,10 +54,16 @@
         }
 
         <tr id="contents">
-          <td style="font-family: Helvetica, Arial, sans-serif; font-size: 15px;">
+          <td class="noborder" style="font-family: Helvetica, Arial, sans-serif; font-size: 15px;">
             <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">
               <tr>
-                <td style="font-family: Helvetica, Arial, sans-serif; padding: 0; color: #000000;">
+                <td class="noborder" style="font-family: Helvetica, Arial, sans-serif; padding: 0; color: #000000;">
+                  <style>
+                      table, th, td {
+                          border: 1px solid black;
+                          border-collapse: collapse;
+                      }
+                  </style>
                   @content
                 </td>
               </tr>
@@ -63,7 +74,7 @@
 
         @if(showFooter == "true") {
             <tr id="footer" style="font-size: 15px; color: #000000;color: #000000;">
-              <td style="font-family: Helvetica, Arial, sans-serif;line-height: 1.5;">
+              <td class="noborder" style="font-family: Helvetica, Arial, sans-serif;line-height: 1.5;">
                   <a title="sig1" style="font-size: 15px;  text-decoration: none; color: #000000; line-height: 1.5;"><br>Software Developer Support Team</a>
                   <a title="sig2" style="font-size: 15px;  text-decoration: none; color: #000000; line-height: 1.5;"><br>HMRC CDIO EPS | Enterprise Integration Services</a>
                   <a title="sig3" style="font-size: 15px;  text-decoration: underline; color: #0000FF; line-height: 1.5;" href = "mailto:SDSTeam&#64;hmrc.gov.uk"><br>Email:SDSTeam&#64;hmrc.gov.uk</a>
