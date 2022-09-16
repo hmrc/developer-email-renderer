@@ -20,9 +20,16 @@
 <!DOCTYPE html>
 <html xmlns:color="http://www.w3.org/1999/xhtml">
   <head>
+
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <title>@title</title>
+    <style>
+        main table, main th, main td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
   </head>
   <body style="background-color: #FFFFFF; margin: 0; padding: 0;">
     <div id="background" style="background-color: #FFFFFF; margin: 0; overflow: hidden;">
@@ -53,7 +60,9 @@
             <table width="100%" cellspacing="0" cellpadding="0" style="background: #FFFFFF;">
               <tr>
                 <td style="font-family: Helvetica, Arial, sans-serif; padding: 0; color: #000000;">
-                  @content
+                  <main>
+                    @content
+                  </main>
                 </td>
               </tr>
             </table>
