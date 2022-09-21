@@ -17,7 +17,7 @@ object AppDependencies {
       "net.codingwell"                       %% "scala-guice"                % "4.2.6",
       "com.beachape"                         %% "enumeratum"                 % "1.6.1",
       "org.jsoup"                            % "jsoup"                       % "1.13.1",
-      "com.atlassian.commonmark"             % "commonmark-ext-gfm-tables"  % "0.17.0",
+      "org.commonmark"                       % "commonmark-ext-gfm-tables"  % "0.19.0",
       "com.fasterxml.jackson.module"         %% "jackson-module-scala"       % jacksonVersion,
       "com.fasterxml.jackson.core"           % "jackson-annotations"         % jacksonVersion,
       "com.fasterxml.jackson.core"           % "jackson-databind"            % jacksonVersion,
