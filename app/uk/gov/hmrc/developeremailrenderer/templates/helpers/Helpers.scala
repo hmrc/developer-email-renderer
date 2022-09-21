@@ -41,7 +41,7 @@ object Markdown {
 
   def apply(text: String): Html = {
     val document = parser.parse(text)
-    Html(renderer.render(document))
+    Html(Html(renderer.render(document)).toString().replace("<table>", "<table  border= \"1px solid black\"; border-collapse=  \"collapse\";>"))
   }
 
 }
