@@ -9,7 +9,9 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
 import bloop.integrations.sbt.BloopDefaults
 
-lazy val microservice = (project in file("."))
+lazy val appName = "developer-email-renderer"
+
+lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin)
   .settings(scalaSettings: _*)
   .settings(publishingSettings: _*)
@@ -20,14 +22,14 @@ lazy val microservice = (project in file("."))
     name := appName,
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,
-    evictionWarningOptions in update := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
+    update / evictionWarningOptions := EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
     routesGenerator := InjectedRoutesGenerator,
     shellPrompt := (_ => "> "),
     majorVersion := 0,
     Test / testOptions := Seq(Tests.Argument(TestFrameworks.ScalaTest, "-eT")),
     Test / unmanagedSourceDirectories += baseDirectory.value / "testCommon",
     Test / unmanagedSourceDirectories += baseDirectory.value / "test",
-    testOptions in Test := Seq(
+    Test / testOptions := Seq(
       Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/test-reports"),
       Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/test-reports/html-report"),
       Tests.Argument("-oD")
@@ -42,7 +44,7 @@ lazy val microservice = (project in file("."))
     IntegrationTest / testOptions := Seq(Tests.Argument(TestFrameworks.ScalaTest, "-eT")),
     IntegrationTest / unmanagedSourceDirectories += baseDirectory.value / "testCommon",
     IntegrationTest / unmanagedSourceDirectories += baseDirectory.value / "it",
-    testOptions in IntegrationTest := Seq(
+    IntegrationTest / testOptions := Seq(
       Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/int-test-reports"),
       Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/int-test-reports/html-report"),
       Tests.Argument("-oD")
@@ -54,9 +56,6 @@ lazy val microservice = (project in file("."))
     )
   )
   .disablePlugins(sbt.plugins.JUnitXmlReportPlugin)
-
-
-lazy val appName = "developer-email-renderer"
 
 coverageFailOnMinimum := true
 coverageExcludedPackages := Seq(

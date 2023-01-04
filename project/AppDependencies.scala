@@ -2,7 +2,7 @@ import sbt._
 
 object AppDependencies {
 
-  lazy val bootstrapPlayVersion = "5.23.0"
+  lazy val bootstrapPlayVersion = "7.12.0"
   lazy val logbackVersion = "1.1.10"
   lazy val jsoupVersion = "1.12.1"
   lazy val scalaCheckVersion = "1.14.0"

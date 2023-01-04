@@ -23,6 +23,6 @@ object ScoverageSettings {
     Seq(ScoverageKeys.coverageMinimumStmtTotal := 93.00,
       ScoverageKeys.coverageFailOnMinimum := true,
       ScoverageKeys.coverageHighlighting := true,
-      parallelExecution in ConfigKey.configurationToKey(Test) := false
+      ConfigKey.configurationToKey(Test) / parallelExecution := false
     )
 }
