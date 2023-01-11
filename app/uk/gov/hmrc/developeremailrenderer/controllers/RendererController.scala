@@ -16,16 +16,18 @@
 
 package uk.gov.hmrc.developeremailrenderer.controllers
 
+import scala.concurrent.ExecutionContext
+
 import com.google.inject.Inject
+import util.ApplicationLogger
+
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderRequest
 import uk.gov.hmrc.developeremailrenderer.domain.{MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.services.TemplateRenderer
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import util.ApplicationLogger
-
-import scala.concurrent.ExecutionContext
 
 class RendererController @Inject() (templateRenderer: TemplateRenderer, mcc: MessagesControllerComponents)(implicit ec: ExecutionContext)
     extends FrontendController(mcc)

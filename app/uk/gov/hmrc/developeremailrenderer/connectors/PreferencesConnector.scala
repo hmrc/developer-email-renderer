@@ -16,14 +16,16 @@
 
 package uk.gov.hmrc.developeremailrenderer.connectors
 
+import scala.concurrent.{ExecutionContext, Future}
+
 import com.google.inject.{Inject, Singleton}
+
 import play.api.libs.json.Json
 import uk.gov.hmrc.crypto.{ApplicationCrypto, PlainText}
-import uk.gov.hmrc.developeremailrenderer.model.Language
 import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
-import scala.concurrent.{ExecutionContext, Future}
+import uk.gov.hmrc.developeremailrenderer.model.Language
 @Singleton
 class PreferencesConnector @Inject() (servicesConfig: ServicesConfig, http: HttpClient, crypto: ApplicationCrypto) {
 

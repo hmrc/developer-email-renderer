@@ -17,10 +17,11 @@
 package uk.gov.hmrc.developeremailrenderer.controllers.model
 
 import java.nio.charset.StandardCharsets
+import java.util.Base64
 
 import play.api.libs.json._
+
 import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority.MessagePriority
-import java.util.Base64
 
 case class RenderRequest(parameters: Map[String, String], email: Option[String])
 

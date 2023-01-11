@@ -18,7 +18,9 @@ package uk.gov.hmrc.developeremailrenderer.model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+
 import play.api.libs.json._
+
 import uk.gov.hmrc.developeremailrenderer.model.Language.English
 
 class LanguageSpec extends AnyWordSpec with Matchers {

@@ -17,6 +17,7 @@
 package uk.gov.hmrc.developeremailrenderer.model
 
 import enumeratum.{Enum, EnumEntry}
+
 import play.api.libs.json._
 
 sealed abstract class Language(override val entryName: String) extends EnumEntry

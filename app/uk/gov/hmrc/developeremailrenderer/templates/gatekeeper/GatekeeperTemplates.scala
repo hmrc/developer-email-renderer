@@ -17,8 +17,8 @@
 package uk.gov.hmrc.developeremailrenderer.templates.gatekeeper
 
 import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate}
-import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
 import uk.gov.hmrc.developeremailrenderer.templates.FromAddress
+import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
 
 /** Templates used by the API Catalogue.
   */

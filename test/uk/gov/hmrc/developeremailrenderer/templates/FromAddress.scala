@@ -16,8 +16,9 @@
 
 package uk.gov.hmrc.developeremailrenderer.templates
 
-import com.typesafe.config.ConfigFactory
 import scala.util.Try
+
+import com.typesafe.config.ConfigFactory
 
 case class FromAddress(f: Map[String, String] => String) {
   def apply(p: Map[String, String]) = f(p)

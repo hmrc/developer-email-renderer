@@ -16,12 +16,13 @@
 
 package uk.gov.hmrc.developeremailrenderer.config
 
+import com.google.inject.{Inject, Singleton}
+import preview.views.html.error_template
+
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.Request
 import play.twirl.api.Html
 import uk.gov.hmrc.play.bootstrap.frontend.http.FrontendErrorHandler
-import preview.views.html.error_template
-import com.google.inject.{Inject, Singleton}
 
 @Singleton
 class ErrorHandler @Inject() (

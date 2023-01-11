@@ -16,23 +16,25 @@
 
 package uk.gov.hmrc.developeremailrenderer.services
 
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success, Try}
+
 import com.google.inject.Inject
+import util.ApplicationLogger
+
 import play.api.Configuration
 import play.twirl.api.Format
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
+import uk.gov.hmrc.play.audit.model.DataEvent
+import uk.gov.hmrc.play.audit.model.EventTypes.Succeeded
+
 import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
 import uk.gov.hmrc.developeremailrenderer.domain.{ErrorMessage, MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.model.Language
 import uk.gov.hmrc.developeremailrenderer.model.Language.English
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
-import uk.gov.hmrc.play.audit.model.DataEvent
-import uk.gov.hmrc.play.audit.model.EventTypes.Succeeded
-import util.ApplicationLogger
-
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success, Try}
 
 class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: AuditConnector, preferencesConnector: PreferencesConnector) extends ApplicationLogger {
 
