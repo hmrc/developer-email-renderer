@@ -36,8 +36,8 @@ lazy val microservice = Project(appName, file("."))
     ),
   )
   .configs(IntegrationTest)
+  .settings(integrationTestSettings(): _*)
   .settings(
-    Defaults.itSettings,
     IntegrationTest / Keys.fork := false,
     addTestReportOption(IntegrationTest, "int-test-reports"),
     IntegrationTest / parallelExecution := false,
