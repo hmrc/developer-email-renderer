@@ -27,17 +27,16 @@ import util.ApplicationLogger
 
 import scala.concurrent.ExecutionContext
 
-
-class RendererController @Inject()(templateRenderer: TemplateRenderer, mcc: MessagesControllerComponents)
-                                  (implicit ec: ExecutionContext)
-    extends FrontendController(mcc) with ApplicationLogger {
+class RendererController @Inject() (templateRenderer: TemplateRenderer, mcc: MessagesControllerComponents)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with ApplicationLogger {
 
   def renderTemplate(templateId: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withJsonBody[RenderRequest] { renderReq =>
       templateRenderer.languageTemplateId(templateId, renderReq.email).map { tId =>
         templateRenderer.render(tId, renderReq.parameters) match {
-          case Right(rendered)            => Ok(Json.toJson(rendered))
-          case Left(MissingTemplateId(_)) => NotFound
+          case Right(rendered)                    => Ok(Json.toJson(rendered))
+          case Left(MissingTemplateId(_))         => NotFound
           case Left(x @ TemplateRenderFailure(_)) =>
             logger.warn(s"Failed to render message, reason: ${x.reason}")
             BadRequest(Json.toJson(x))

@@ -31,5 +31,4 @@ trait TemplateLocator {
     all.find(_.templateId == templateId)
 }
 
-object TemplateLocator extends TemplateLocator {
-}
+object TemplateLocator extends TemplateLocator {}

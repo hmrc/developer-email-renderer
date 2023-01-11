@@ -32,8 +32,7 @@ import uk.gov.hmrc.http.HttpClient
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class PreferencesConnectorSpec
-    extends AnyWordSpecLike with Matchers with OptionValues with MockitoSugar with GuiceOneAppPerSuite with ScalaFutures {
+class PreferencesConnectorSpec extends AnyWordSpecLike with Matchers with OptionValues with MockitoSugar with GuiceOneAppPerSuite with ScalaFutures {
 
   "PreferencesConnector language by email" should {
     "return English if preference returns English" in new TestCase {
@@ -45,12 +44,12 @@ class PreferencesConnectorSpec
 
   trait TestCase {
     implicit val headerCarrier: HeaderCarrier = new HeaderCarrier()
-    val servicesConfig = mock[ServicesConfig]
-    val httpClient = mock[HttpClient]
-    val crypto = app.injector.instanceOf[ApplicationCrypto]
-    val preferencesConnector = new PreferencesConnector(servicesConfig, httpClient, crypto)
-    val email = "test@tetst.com"
-    val encryptedEmail = new String(crypto.QueryParameterCrypto.encrypt(PlainText(email)).toBase64)
-    val url = servicesConfig.baseUrl("preferences") + s"/preferences/language/$encryptedEmail"
+    val servicesConfig                        = mock[ServicesConfig]
+    val httpClient                            = mock[HttpClient]
+    val crypto                                = app.injector.instanceOf[ApplicationCrypto]
+    val preferencesConnector                  = new PreferencesConnector(servicesConfig, httpClient, crypto)
+    val email                                 = "test@tetst.com"
+    val encryptedEmail                        = new String(crypto.QueryParameterCrypto.encrypt(PlainText(email)).toBase64)
+    val url                                   = servicesConfig.baseUrl("preferences") + s"/preferences/language/$encryptedEmail"
   }
 }

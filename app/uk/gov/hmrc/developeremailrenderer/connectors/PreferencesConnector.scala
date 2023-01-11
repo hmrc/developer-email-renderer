@@ -16,16 +16,16 @@
 
 package uk.gov.hmrc.developeremailrenderer.connectors
 
-import com.google.inject.{ Inject, Singleton }
+import com.google.inject.{Inject, Singleton}
 import play.api.libs.json.Json
-import uk.gov.hmrc.crypto.{ ApplicationCrypto, PlainText }
+import uk.gov.hmrc.crypto.{ApplicationCrypto, PlainText}
 import uk.gov.hmrc.developeremailrenderer.model.Language
-import uk.gov.hmrc.http.{ HeaderCarrier, HttpClient }
+import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 @Singleton
-class PreferencesConnector @Inject()(servicesConfig: ServicesConfig, http: HttpClient, crypto: ApplicationCrypto) {
+class PreferencesConnector @Inject() (servicesConfig: ServicesConfig, http: HttpClient, crypto: ApplicationCrypto) {
 
   object LanguagePreference {
     implicit val format = Json.format[LanguagePreference]
@@ -33,7 +33,7 @@ class PreferencesConnector @Inject()(servicesConfig: ServicesConfig, http: HttpC
 
   def languageByEmail(emailAddress: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Language] = {
     val encryptedEmail = new String(crypto.QueryParameterCrypto.encrypt(PlainText(emailAddress)).toBase64)
-    val url = servicesConfig.baseUrl("preferences") + s"/preferences/language/$encryptedEmail"
+    val url            = servicesConfig.baseUrl("preferences") + s"/preferences/language/$encryptedEmail"
     http.GET[Language](url)
   }
 }

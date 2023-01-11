@@ -18,7 +18,7 @@ package uk.gov.hmrc.developeremailrenderer.domain
 
 object MessagePriority extends Enumeration {
   type MessagePriority = Value
-  val Urgent = Value("urgent")
-  val Standard = Value("standard")
+  val Urgent     = Value("urgent")
+  val Standard   = Value("standard")
   val Background = Value("background")
 }

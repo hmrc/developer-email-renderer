@@ -31,21 +31,24 @@ object Markdown {
   import org.commonmark.ext.gfm.tables.TablesExtension;
 
   val extensions = util.Arrays.asList(TablesExtension.create());
-  val parser = Parser.builder()
+  val parser     = Parser
+    .builder()
     .extensions(extensions)
     .build();
-  val renderer = HtmlRenderer.builder()
+  val renderer   = HtmlRenderer
+    .builder()
     .extensions(extensions)
     .build();
-
 
   def apply(text: String): Html = {
     val document = parser.parse(text)
-    Html(Html(renderer.render(document)).toString()
-      .replace("<table>", "<table style=\"border:1px solid black;border-collapse:collapse\">")
-      .replace("<th>", "<th style=\"border:1px solid black;border-collapse:collapse\">")
-      .replace("<td>", "<td style=\"border:1px solid black;border-collapse:collapse\">"))
+    Html(
+      Html(renderer.render(document))
+        .toString()
+        .replace("<table>", "<table style=\"border:1px solid black;border-collapse:collapse\">")
+        .replace("<th>", "<th style=\"border:1px solid black;border-collapse:collapse\">")
+        .replace("<td>", "<td style=\"border:1px solid black;border-collapse:collapse\">")
+    )
   }
 
 }
-

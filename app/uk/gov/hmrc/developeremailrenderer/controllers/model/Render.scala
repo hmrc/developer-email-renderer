@@ -28,13 +28,7 @@ object RenderRequest {
   implicit val reads = Json.reads[RenderRequest]
 }
 
-case class RenderResult(
-  plain: String,
-  html: String,
-  fromAddress: String,
-  subject: String,
-  service: String,
-  priority: Option[MessagePriority])
+case class RenderResult(plain: String, html: String, fromAddress: String, subject: String, service: String, priority: Option[MessagePriority])
 
 object RenderResult {
   private def base64Encoded(value: String) = Base64.getEncoder.encodeToString(value.getBytes(StandardCharsets.UTF_8))

@@ -23,7 +23,6 @@ import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 import play.api.libs.json._
 
-
 class RenderResultSpec extends AnyWordSpecLike with Matchers with OptionValues {
   "RenderResult" should {
 

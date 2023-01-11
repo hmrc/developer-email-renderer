@@ -24,9 +24,9 @@ import uk.gov.hmrc.developeremailrenderer.templates.gatekeeper
 
 class gatekeeperSpec extends AnyWordSpec with Matchers {
 
-  val applicationName = "Application Name"
-  val role = "role"
-  val article = "a"
+  val applicationName   = "Application Name"
+  val role              = "role"
+  val article           = "a"
   val developerHubTitle = "Developer Hub Title"
 
   val templateParams = Map(

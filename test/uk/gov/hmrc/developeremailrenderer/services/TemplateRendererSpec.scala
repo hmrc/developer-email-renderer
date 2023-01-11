@@ -85,9 +85,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
       templateRenderer.languageTemplateId(templateId, Some("test@test.com")).futureValue shouldBe templateId
       verify(auditConnector)
@@ -104,7 +104,6 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       )
     }
 
-
     "return english template if template is in WelshTemplatesByLangPreference and language preferences set to english" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
 
@@ -115,9 +114,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
 
       templateRenderer.languageTemplateId(engTemplateId, Some("test@test.com")).futureValue shouldBe engTemplateId
@@ -147,9 +146,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> engTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
 
       templateRenderer.languageTemplateId(templateId, Some("test@test.com")).futureValue shouldBe templateId
@@ -177,9 +176,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
 
       templateRenderer.languageTemplateId(templateId, None).futureValue shouldBe templateId
@@ -206,9 +205,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
         .thenReturn(Future.successful(AuditResult.Success))
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
 
       templateRenderer.languageTemplateId(engTemplateId, None).futureValue shouldBe engTemplateId
@@ -231,20 +230,20 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
   class TestCase {
 
-    val locatorMock = mock[TemplateLocator]
-    val templateId = "a-template-id"
-    val engTemplateId = "engTemplateId"
+    val locatorMock     = mock[TemplateLocator]
+    val templateId      = "a-template-id"
+    val engTemplateId   = "engTemplateId"
     val welshTemplateId = "welshTemplateId"
 
     val configuration = mock[Configuration]
 
-    val auditConnector = mock[AuditConnector]
+    val auditConnector       = mock[AuditConnector]
     val preferencesConnector = mock[PreferencesConnector]
 
     val templateRenderer = new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-      override val locator = locatorMock
+      override val locator                                             = locatorMock
       override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-      override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+      override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
     }
 
     val validTemplate = MessageTemplate.create(
@@ -257,7 +256,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       Some(MessagePriority.Urgent)
     )
 
-    val validRenderedResult = RenderResult(
+    val validRenderedResult                   = RenderResult(
       fromAddress = "from@test",
       service = "gatekeeper",
       subject = "a subject",

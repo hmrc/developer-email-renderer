@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.developeremailrenderer.model
 
-import enumeratum.{ Enum, EnumEntry }
+import enumeratum.{Enum, EnumEntry}
 import play.api.libs.json._
 
 sealed abstract class Language(override val entryName: String) extends EnumEntry
@@ -27,8 +27,8 @@ case object Language extends Enum[Language] {
 
   case object English extends Language("en")
 
-  implicit val languageReads = Reads[Language] {
-    case _ => JsSuccess(Language.English)
+  implicit val languageReads  = Reads[Language] { case _ =>
+    JsSuccess(Language.English)
   }
   implicit val languageWrites = new Writes[Language] {
     override def writes(e: Language): JsValue = JsString(e.entryName)

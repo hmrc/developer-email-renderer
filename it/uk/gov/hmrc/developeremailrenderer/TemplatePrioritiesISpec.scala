@@ -26,8 +26,15 @@ import org.scalatestplus.play.{ServerProvider, WsScalaTestClient}
 import uk.gov.hmrc.play.http.test.ResponseMatchers
 
 class TemplatePrioritiesISpec
-    extends AnyWordSpecLike with Matchers with OptionValues with WsScalaTestClient with GuiceOneServerPerSuite
-    with ScalaFutures with ResponseMatchers with ServerProvider with TableDrivenPropertyChecks {
+    extends AnyWordSpecLike
+    with Matchers
+    with OptionValues
+    with WsScalaTestClient
+    with GuiceOneServerPerSuite
+    with ScalaFutures
+    with ResponseMatchers
+    with ServerProvider
+    with TableDrivenPropertyChecks {
 
   object TestTemplates {
 
