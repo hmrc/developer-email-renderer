@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,29 @@
 
 package uk.gov.hmrc.developeremailrenderer.controllers
 
+import scala.concurrent.ExecutionContext
+
 import com.google.inject.Inject
+import util.ApplicationLogger
+
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderRequest
 import uk.gov.hmrc.developeremailrenderer.domain.{MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.services.TemplateRenderer
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
-import util.ApplicationLogger
 
-import scala.concurrent.ExecutionContext
-
-
-class RendererController @Inject()(templateRenderer: TemplateRenderer, mcc: MessagesControllerComponents)
-                                  (implicit ec: ExecutionContext)
-    extends FrontendController(mcc) with ApplicationLogger {
+class RendererController @Inject() (templateRenderer: TemplateRenderer, mcc: MessagesControllerComponents)(implicit ec: ExecutionContext)
+    extends FrontendController(mcc)
+    with ApplicationLogger {
 
   def renderTemplate(templateId: String): Action[JsValue] = Action.async(parse.json) { implicit request =>
     withJsonBody[RenderRequest] { renderReq =>
       templateRenderer.languageTemplateId(templateId, renderReq.email).map { tId =>
         templateRenderer.render(tId, renderReq.parameters) match {
-          case Right(rendered)            => Ok(Json.toJson(rendered))
-          case Left(MissingTemplateId(_)) => NotFound
+          case Right(rendered)                    => Ok(Json.toJson(rendered))
+          case Left(MissingTemplateId(_))         => NotFound
           case Left(x @ TemplateRenderFailure(_)) =>
             logger.warn(s"Failed to render message, reason: ${x.reason}")
             BadRequest(Json.toJson(x))

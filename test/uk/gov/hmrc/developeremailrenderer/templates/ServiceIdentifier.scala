@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,6 @@ sealed trait ServiceIdentifier extends Product with Serializable {
   def name: String
 }
 object ServiceIdentifier {
-  case object GateKeeper extends ServiceIdentifier { override val name = "gatekeeper" }
-  case object SelfAssessment extends ServiceIdentifier { override val name = "sa" }
+  case object GateKeeper     extends ServiceIdentifier { override val name = "gatekeeper" }
+  case object SelfAssessment extends ServiceIdentifier { override val name = "sa"         }
 }

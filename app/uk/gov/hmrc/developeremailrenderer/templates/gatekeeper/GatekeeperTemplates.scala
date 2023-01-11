@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,11 @@
 
 package uk.gov.hmrc.developeremailrenderer.templates.gatekeeper
 
-import uk.gov.hmrc.developeremailrenderer.domain.{ MessagePriority, MessageTemplate }
-import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
+import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate}
 import uk.gov.hmrc.developeremailrenderer.templates.FromAddress
+import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
 
-/**
-  * Templates used by the API Catalogue.
+/** Templates used by the API Catalogue.
   */
 object GatekeeperTemplates {
 

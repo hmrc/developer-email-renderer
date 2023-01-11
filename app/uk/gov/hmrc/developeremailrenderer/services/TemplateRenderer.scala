@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,29 +16,27 @@
 
 package uk.gov.hmrc.developeremailrenderer.services
 
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.{Failure, Success, Try}
+
 import com.google.inject.Inject
+import util.ApplicationLogger
+
 import play.api.Configuration
 import play.twirl.api.Format
+import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
+import uk.gov.hmrc.play.audit.model.DataEvent
+import uk.gov.hmrc.play.audit.model.EventTypes.Succeeded
+
 import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
 import uk.gov.hmrc.developeremailrenderer.domain.{ErrorMessage, MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.model.Language
 import uk.gov.hmrc.developeremailrenderer.model.Language.English
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
-import uk.gov.hmrc.http.HeaderCarrier
-import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
-import uk.gov.hmrc.play.audit.model.DataEvent
-import uk.gov.hmrc.play.audit.model.EventTypes.Succeeded
-import util.ApplicationLogger
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success, Try}
-
-class TemplateRenderer @Inject()(
-  configuration: Configuration,
-  auditConnector: AuditConnector,
-  preferencesConnector: PreferencesConnector)
-    extends ApplicationLogger {
+class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: AuditConnector, preferencesConnector: PreferencesConnector) extends ApplicationLogger {
 
   val locator: TemplateLocator = TemplateLocator
 
@@ -54,23 +52,19 @@ class TemplateRenderer @Inject()(
       template  <- locator.findTemplate(templateId).toRight[ErrorMessage](MissingTemplateId(templateId)).right
       plainText <- render(template.plainTemplate, allParams).right
       htmlText  <- render(template.htmlTemplate, allParams).right
-    } yield
-      RenderResult(
-        plainText,
-        htmlText,
-        template.fromAddress(allParams),
-        template.subject(allParams),
-        template.service.name,
-        template.priority
-      )
+    } yield RenderResult(
+      plainText,
+      htmlText,
+      template.fromAddress(allParams),
+      template.subject(allParams),
+      template.service.name,
+      template.priority
+    )
   }
 
-  def sendLanguageEvents(
-    email: String,
-    language: Language,
-    originalTemplateId: String,
-    selectedTemplateId: String,
-    description: String)(implicit ec: ExecutionContext): Future[AuditResult] = {
+  def sendLanguageEvents(email: String, language: Language, originalTemplateId: String, selectedTemplateId: String, description: String)(implicit
+      ec: ExecutionContext
+  ): Future[AuditResult] = {
 
     val event = DataEvent(
       "developer-email-renderer",
@@ -88,16 +82,13 @@ class TemplateRenderer @Inject()(
     auditConnector.sendEvent(event) map { success =>
       logger.debug("Language event successfully audited")
       success
-    } recover {
-      case e @ AuditResult.Failure(msg, _) =>
-        logger.warn(s"Language event failed to audit: $msg")
-        e
+    } recover { case e @ AuditResult.Failure(msg, _) =>
+      logger.warn(s"Language event failed to audit: $msg")
+      e
     }
   }
 
-  def languageTemplateId(originalTemplateId: String, emailAddress: Option[String])(
-    implicit hc: HeaderCarrier,
-    ec: ExecutionContext): Future[String] = {
+  def languageTemplateId(originalTemplateId: String, emailAddress: Option[String])(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[String] = {
 
     if (templatesByLangPreference.size <= 0) {
       logger.warn("WelshTemplatesByLangPreferences allowlist is empty")
@@ -113,15 +104,14 @@ class TemplateRenderer @Inject()(
         }
         sendLanguageEvents(email, lang, originalTemplateId, selectedTemplateId, "Language preference found")
         selectedTemplateId
-      } recover {
-        case e: Throwable =>
-          logger.error(s"Error retrieving language preference from preferences service: ${e.getMessage}")
-          originalTemplateId
+      } recover { case e: Throwable =>
+        logger.error(s"Error retrieving language preference from preferences service: ${e.getMessage}")
+        originalTemplateId
       }
     }
     result match {
       case Some(templateId) => templateId
-      case None =>
+      case None             =>
         sendLanguageEvents(
           emailAddress.getOrElse("N/A"),
           Language.English,
@@ -133,9 +123,7 @@ class TemplateRenderer @Inject()(
     }
   }
 
-  private def render(
-    template: Map[String, String] => Format[_]#Appendable,
-    params: Map[String, String]): Either[ErrorMessage, String] =
+  private def render(template: Map[String, String] => Format[_]#Appendable, params: Map[String, String]): Either[ErrorMessage, String] =
     Try(template(params)) match {
       case Success(output) => Right(output.toString)
       case Failure(error)  => Left(TemplateRenderFailure(error.getMessage))

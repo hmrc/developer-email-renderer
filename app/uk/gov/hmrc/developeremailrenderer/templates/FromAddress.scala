@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,9 @@
 
 package uk.gov.hmrc.developeremailrenderer.templates
 
-import com.typesafe.config.ConfigFactory
 import scala.util.Try
+
+import com.typesafe.config.ConfigFactory
 
 case class FromAddress(f: Map[String, String] => String) {
   def apply(p: Map[String, String]) = f(p)
@@ -30,6 +31,6 @@ object FromAddress {
 
   def noReply(name: String): String = s"$name <noreply@$replyDomain>"
 
-  lazy val govUkTeamAddress = noReply("Gov.uk Team")
+  lazy val govUkTeamAddress      = noReply("Gov.uk Team")
   lazy val govUkTeamAddressWelsh = noReply("Gov.uk Tîm")
 }

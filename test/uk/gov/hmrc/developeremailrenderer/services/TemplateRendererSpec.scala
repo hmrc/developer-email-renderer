@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,26 +32,27 @@
 
 package uk.gov.hmrc.developeremailrenderer.services
 
-import org.mockito.ArgumentCaptor
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{ExecutionContext, Future}
+
 import org.mockito.ArgumentMatchers.{any, anyString}
-import org.mockito.MockitoSugar
-import org.scalatest.concurrent.ScalaFutures
+import org.mockito.{ArgumentCaptor, MockitoSugar}
 import org.scalatest.OptionValues
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
+
 import play.api.Configuration
-import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
-import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
-import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure}
-import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
-import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
 import uk.gov.hmrc.play.audit.model.DataEvent
-import uk.gov.hmrc.developeremailrenderer.model.Language
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{ExecutionContext, Future}
+import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
+import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
+import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure}
+import uk.gov.hmrc.developeremailrenderer.model.Language
+import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
+import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 
 class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValues with MockitoSugar with ScalaFutures {
   "The template renderer" should {
@@ -85,9 +86,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
       templateRenderer.languageTemplateId(templateId, Some("test@test.com")).futureValue shouldBe templateId
       verify(auditConnector)
@@ -104,7 +105,6 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       )
     }
 
-
     "return english template if template is in WelshTemplatesByLangPreference and language preferences set to english" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
 
@@ -115,9 +115,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
 
       templateRenderer.languageTemplateId(engTemplateId, Some("test@test.com")).futureValue shouldBe engTemplateId
@@ -147,9 +147,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> engTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
 
       templateRenderer.languageTemplateId(templateId, Some("test@test.com")).futureValue shouldBe templateId
@@ -177,9 +177,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
 
       templateRenderer.languageTemplateId(templateId, None).futureValue shouldBe templateId
@@ -206,9 +206,9 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
         .thenReturn(Future.successful(AuditResult.Success))
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-          override val locator = locatorMock
+          override val locator                                             = locatorMock
           override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-          override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+          override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
         }
 
       templateRenderer.languageTemplateId(engTemplateId, None).futureValue shouldBe engTemplateId
@@ -231,20 +231,20 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
 
   class TestCase {
 
-    val locatorMock = mock[TemplateLocator]
-    val templateId = "a-template-id"
-    val engTemplateId = "engTemplateId"
+    val locatorMock     = mock[TemplateLocator]
+    val templateId      = "a-template-id"
+    val engTemplateId   = "engTemplateId"
     val welshTemplateId = "welshTemplateId"
 
     val configuration = mock[Configuration]
 
-    val auditConnector = mock[AuditConnector]
+    val auditConnector       = mock[AuditConnector]
     val preferencesConnector = mock[PreferencesConnector]
 
     val templateRenderer = new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
-      override val locator = locatorMock
+      override val locator                                             = locatorMock
       override lazy val templatesByLangPreference: Map[String, String] = Map(engTemplateId -> welshTemplateId)
-      override lazy val commonParameters: Map[String, String] = Map("commonKey"            -> "commonValue")
+      override lazy val commonParameters: Map[String, String]          = Map("commonKey" -> "commonValue")
     }
 
     val validTemplate = MessageTemplate.create(
@@ -257,7 +257,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       Some(MessagePriority.Urgent)
     )
 
-    val validRenderedResult = RenderResult(
+    val validRenderedResult                   = RenderResult(
       fromAddress = "from@test",
       service = "gatekeeper",
       subject = "a subject",

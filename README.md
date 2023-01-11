@@ -1,15 +1,10 @@
 # developer-email-renderer
 
-This is a placeholder README.md for a new repository
+This repository renders the emails that are sent to application developers by gatekeeper-compose-emails (which allows SDST to send emails to developers).
 
-## Technical Documentation
+## Running the tests
 
-Some examples of markdown
-https://github.com/commonmark/commonmark-java
-
-extended markdown syntax with tables examples
-https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables
-
+    run_all_tests.sh
 
 ## License
 

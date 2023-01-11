@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,30 +16,32 @@
 
 package uk.gov.hmrc.developeremailrenderer.domain
 
-import play.api.libs.json.{ Json, Writes }
-import play.twirl.api.{ HtmlFormat, TxtFormat }
-import uk.gov.hmrc.developeremailrenderer.templates.FromAddress
+import play.api.libs.json.{Json, Writes}
+import play.twirl.api.{HtmlFormat, TxtFormat}
+
 import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority.MessagePriority
-import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier
+import uk.gov.hmrc.developeremailrenderer.templates.{FromAddress, ServiceIdentifier}
 
 case class MessageTemplate(
-  templateId: String,
-  fromAddress: FromAddress,
-  service: ServiceIdentifier,
-  subject: Subject,
-  plainTemplate: Body.Plain,
-  htmlTemplate: Body.Html,
-  priority: Option[MessagePriority])
+    templateId: String,
+    fromAddress: FromAddress,
+    service: ServiceIdentifier,
+    subject: Subject,
+    plainTemplate: Body.Plain,
+    htmlTemplate: Body.Html,
+    priority: Option[MessagePriority]
+)
 object MessageTemplate {
 
   def create(
-    templateId: String,
-    fromAddress: String,
-    service: ServiceIdentifier,
-    subject: String,
-    plainTemplate: Body.Plain,
-    htmlTemplate: Body.Html,
-    priority: Option[MessagePriority] = None) =
+      templateId: String,
+      fromAddress: String,
+      service: ServiceIdentifier,
+      subject: String,
+      plainTemplate: Body.Plain,
+      htmlTemplate: Body.Html,
+      priority: Option[MessagePriority] = None
+  ) =
     MessageTemplate(
       templateId,
       FromAddress(_ => fromAddress),
@@ -51,13 +53,14 @@ object MessageTemplate {
     )
 
   def createWithDynamicSubjectAndFromAddress(
-    templateId: String,
-    fromAddress: Map[String, String] => String,
-    service: ServiceIdentifier,
-    subject: Map[String, String] => String,
-    plainTemplate: Body.Plain,
-    htmlTemplate: Body.Html,
-    priority: Option[MessagePriority] = None) =
+      templateId: String,
+      fromAddress: Map[String, String] => String,
+      service: ServiceIdentifier,
+      subject: Map[String, String] => String,
+      plainTemplate: Body.Plain,
+      htmlTemplate: Body.Html,
+      priority: Option[MessagePriority] = None
+  ) =
     MessageTemplate(
       templateId,
       FromAddress(fromAddress),
@@ -77,12 +80,12 @@ case class Subject(f: Map[String, String] => String) {
 object Subject {
   def fromPlainString(text: String): Subject = Subject(_ => text)
 }
-object Body {
+object Body    {
   type Plain = Map[String, Any] => TxtFormat.Appendable
-  type Html = Map[String, Any] => HtmlFormat.Appendable
+  type Html  = Map[String, Any] => HtmlFormat.Appendable
 }
 
-sealed trait ErrorMessage extends Product with Serializable
+sealed trait ErrorMessage                              extends Product with Serializable
 final case class MissingTemplateId(templateId: String) extends ErrorMessage
 final case class TemplateRenderFailure(reason: String) extends ErrorMessage
 object TemplateRenderFailure {

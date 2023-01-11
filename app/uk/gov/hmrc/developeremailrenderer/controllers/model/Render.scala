@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,11 @@
 package uk.gov.hmrc.developeremailrenderer.controllers.model
 
 import java.nio.charset.StandardCharsets
+import java.util.Base64
 
 import play.api.libs.json._
+
 import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority.MessagePriority
-import java.util.Base64
 
 case class RenderRequest(parameters: Map[String, String], email: Option[String])
 
@@ -28,13 +29,7 @@ object RenderRequest {
   implicit val reads = Json.reads[RenderRequest]
 }
 
-case class RenderResult(
-  plain: String,
-  html: String,
-  fromAddress: String,
-  subject: String,
-  service: String,
-  priority: Option[MessagePriority])
+case class RenderResult(plain: String, html: String, fromAddress: String, subject: String, service: String, priority: Option[MessagePriority])
 
 object RenderResult {
   private def base64Encoded(value: String) = Base64.getEncoder.encodeToString(value.getBytes(StandardCharsets.UTF_8))
