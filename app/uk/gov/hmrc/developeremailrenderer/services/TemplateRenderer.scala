@@ -23,7 +23,7 @@ import com.google.inject.Inject
 import util.ApplicationLogger
 
 import play.api.Configuration
-import play.twirl.api.Format
+import play.twirl.api.BufferedContent
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.{AuditConnector, AuditResult}
 import uk.gov.hmrc.play.audit.model.DataEvent
@@ -41,17 +41,17 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
   val locator: TemplateLocator = TemplateLocator
 
   lazy val commonParameters: Map[String, String] =
-    configuration.get[Configuration](s"templates.config").entrySet.toMap.mapValues(_.unwrapped.toString)
+    configuration.get[Configuration](s"templates.config").entrySet.toMap.view.mapValues(_.unwrapped.toString).toMap
 
   lazy val templatesByLangPreference =
-    configuration.get[Configuration]("welshTemplatesByLangPreferences").entrySet.toMap.mapValues(_.unwrapped.toString)
+    configuration.get[Configuration]("welshTemplatesByLangPreferences").entrySet.toMap.view.mapValues(_.unwrapped.toString).toMap
 
   def render(templateId: String, parameters: Map[String, String]): Either[ErrorMessage, RenderResult] = {
     val allParams = commonParameters ++ parameters
     for {
-      template  <- locator.findTemplate(templateId).toRight[ErrorMessage](MissingTemplateId(templateId)).right
-      plainText <- render(template.plainTemplate, allParams).right
-      htmlText  <- render(template.htmlTemplate, allParams).right
+      template  <- locator.findTemplate(templateId).toRight[ErrorMessage](MissingTemplateId(templateId))
+      plainText <- render(template.plainTemplate, allParams)
+      htmlText  <- render(template.htmlTemplate, allParams)
     } yield RenderResult(
       plainText,
       htmlText,
@@ -123,10 +123,9 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
     }
   }
 
-  private def render(template: Map[String, String] => Format[_]#Appendable, params: Map[String, String]): Either[ErrorMessage, String] =
+  private def render(template: Map[String, Any] => _ <: BufferedContent[_], params: Map[String, String]): Either[ErrorMessage, String] =
     Try(template(params)) match {
       case Success(output) => Right(output.toString)
       case Failure(error)  => Left(TemplateRenderFailure(error.getMessage))
     }
-
 }
