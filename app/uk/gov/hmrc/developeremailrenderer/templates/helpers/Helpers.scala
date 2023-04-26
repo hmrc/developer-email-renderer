@@ -17,10 +17,7 @@
 package uk.gov.hmrc.developeremailrenderer.templates.helpers
 
 import java.util
-import scala.language.reflectiveCalls
 
-import akka.http.scaladsl.model.{StatusCode, StatusCodes}
-import org.commonmark.Extension
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 

@@ -11,15 +11,11 @@ import bloop.integrations.sbt.BloopDefaults
 
 lazy val appName = "developer-email-renderer"
 
+scalaVersion := "2.13.8"
+
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
- 
-inThisBuild(
-  List(
-    scalaVersion := "2.12.15",
-    semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision
-  )
-)
+ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin)
@@ -27,7 +23,6 @@ lazy val microservice = Project(appName, file("."))
   .settings(publishingSettings: _*)
   .settings(SilencerSettings(): _*)
   .settings(
-    scalaVersion := "2.12.15",
     name := appName,
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,
