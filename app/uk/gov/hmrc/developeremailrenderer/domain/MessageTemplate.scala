@@ -30,7 +30,8 @@ case class MessageTemplate(
     plainTemplate: Body.Plain,
     htmlTemplate: Body.Html,
     priority: Option[MessagePriority]
-)
+  )
+
 object MessageTemplate {
 
   def create(
@@ -41,7 +42,7 @@ object MessageTemplate {
       plainTemplate: Body.Plain,
       htmlTemplate: Body.Html,
       priority: Option[MessagePriority] = None
-  ) =
+    ) =
     MessageTemplate(
       templateId,
       FromAddress(_ => fromAddress),
@@ -60,7 +61,7 @@ object MessageTemplate {
       plainTemplate: Body.Plain,
       htmlTemplate: Body.Html,
       priority: Option[MessagePriority] = None
-  ) =
+    ) =
     MessageTemplate(
       templateId,
       FromAddress(fromAddress),
@@ -80,6 +81,7 @@ case class Subject(f: Map[String, String] => String) {
 object Subject {
   def fromPlainString(text: String): Subject = Subject(_ => text)
 }
+
 object Body    {
   type Plain = Map[String, Any] => TxtFormat.Appendable
   type Html  = Map[String, Any] => HtmlFormat.Appendable
@@ -88,7 +90,9 @@ object Body    {
 sealed trait ErrorMessage                              extends Product with Serializable
 final case class MissingTemplateId(templateId: String) extends ErrorMessage
 final case class TemplateRenderFailure(reason: String) extends ErrorMessage
+
 object TemplateRenderFailure {
+
   implicit val writes: Writes[TemplateRenderFailure] =
     Writes[TemplateRenderFailure] { failure =>
       Json.obj("reason" -> failure.reason, "status" -> "Rendering of template failed")

@@ -28,10 +28,12 @@ object Markdown {
   import org.commonmark.ext.gfm.tables.TablesExtension;
 
   val extensions = util.Arrays.asList(TablesExtension.create());
+
   val parser     = Parser
     .builder()
     .extensions(extensions)
     .build();
+
   val renderer   = HtmlRenderer
     .builder()
     .extensions(extensions)

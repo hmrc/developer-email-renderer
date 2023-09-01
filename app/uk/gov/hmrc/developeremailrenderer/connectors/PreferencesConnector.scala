@@ -22,11 +22,12 @@ import com.google.inject.{Inject, Singleton}
 
 import play.api.libs.json.Json
 import uk.gov.hmrc.crypto.{ApplicationCrypto, PlainText}
+import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
-import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import uk.gov.hmrc.developeremailrenderer.model.Language
+
 @Singleton
 class PreferencesConnector @Inject() (servicesConfig: ServicesConfig, http: HttpClient, crypto: ApplicationCrypto) {
 

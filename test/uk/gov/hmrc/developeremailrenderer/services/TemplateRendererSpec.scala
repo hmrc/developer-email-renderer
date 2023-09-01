@@ -268,6 +268,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
     implicit val headerCarrier: HeaderCarrier = new HeaderCarrier()
 
     object LocalConfig {
+
       val config = Map(
         "Dev.services.preferences.host"     -> "localhost",
         "Dev.services.preferences.port"     -> "1111",

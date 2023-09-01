@@ -62,9 +62,15 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
     )
   }
 
-  def sendLanguageEvents(email: String, language: Language, originalTemplateId: String, selectedTemplateId: String, description: String)(implicit
+  def sendLanguageEvents(
+      email: String,
+      language: Language,
+      originalTemplateId: String,
+      selectedTemplateId: String,
+      description: String
+    )(implicit
       ec: ExecutionContext
-  ): Future[AuditResult] = {
+    ): Future[AuditResult] = {
 
     val event = DataEvent(
       "developer-email-renderer",
