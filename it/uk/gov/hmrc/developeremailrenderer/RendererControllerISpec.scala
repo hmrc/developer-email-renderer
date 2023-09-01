@@ -24,7 +24,6 @@ import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import org.scalatestplus.play.{ServerProvider, WsScalaTestClient}
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
-import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals.applicationName
 import uk.gov.hmrc.play.http.test.ResponseMatchers
 
 class RendererControllerISpec

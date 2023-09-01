@@ -31,6 +31,7 @@ case object Language extends Enum[Language] {
   implicit val languageReads  = Reads[Language] { case _ =>
     JsSuccess(Language.English)
   }
+
   implicit val languageWrites = new Writes[Language] {
     override def writes(e: Language): JsValue = JsString(e.entryName)
   }

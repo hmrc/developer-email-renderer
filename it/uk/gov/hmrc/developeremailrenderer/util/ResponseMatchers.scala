@@ -28,6 +28,7 @@ trait ResponseMatchers extends ScalaFutures with IntegrationPatience {
   /** Enables syntax like: <code>resource("/write/audit").post(validAuditRequest) should <b>have (status (204))</b></code>
     */
   def status(expected: Int) = new HavePropertyMatcher[Future[WSResponse], Int] {
+
     def apply(response: Future[WSResponse]) = HavePropertyMatchResult(
       matches = response.futureValue.status == expected,
       propertyName = "Response HTTP Status",
@@ -39,6 +40,7 @@ trait ResponseMatchers extends ScalaFutures with IntegrationPatience {
   /** Enables syntax like: <code>resource("/write/audit").post(validAuditRequest) should <b>have (body ("Invalid nino: !@£$%^&*^"))</b></code>
     */
   def body(expected: String) = new HavePropertyMatcher[Future[WSResponse], String] {
+
     def apply(response: Future[WSResponse]) = HavePropertyMatchResult(
       matches = response.futureValue.body == expected,
       propertyName = "Response Body",
@@ -66,6 +68,7 @@ trait ResponseMatchers extends ScalaFutures with IntegrationPatience {
     */
   def jsonProperty[E](path: JsPath, expected: E)(implicit eReads: Reads[E]) =
     new HavePropertyMatcher[Future[WSResponse], String] {
+
       def apply(response: Future[WSResponse]) = HavePropertyMatchResult(
         matches = response.futureValue.json.validate(path.read[E]).map(_ == expected).getOrElse(false),
         propertyName = "Response JSON at path " + path,
@@ -80,6 +83,7 @@ trait ResponseMatchers extends ScalaFutures with IntegrationPatience {
   /** Checks if a property is defined Enables syntax like: <code>resource("/write/audit").post(validAuditRequest) should <b>have (jsonProperty (__ \ "valid"))</b></code>
     */
   def jsonProperty(path: JsPath) = new HavePropertyMatcher[Future[WSResponse], JsValue] {
+
     def apply(response: Future[WSResponse]) = HavePropertyMatchResult(
       matches = response.futureValue.json.validate(path.readNullable[JsValue]).get.isDefined,
       propertyName = "Response JSON at path " + path,
