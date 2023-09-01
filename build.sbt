@@ -20,7 +20,6 @@ ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin)
   .settings(scalaSettings: _*)
-  .settings(publishingSettings: _*)
   .settings(SilencerSettings(): _*)
   .settings(
     name := appName,
