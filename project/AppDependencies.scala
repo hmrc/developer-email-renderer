@@ -25,12 +25,12 @@ object AppDependencies {
       "com.fasterxml.jackson.dataformat"     % "jackson-dataformat-yaml"     % jacksonVersion
     )
   lazy val testScopes = Seq(Test.name, IntegrationTest.name).mkString(",")
-  
+
   lazy val testDependencies: Seq[ModuleID] = Seq(
     "uk.gov.hmrc"            %% "service-integration-test" % "1.4.0-play-28",
-    "org.mockito"            % "mockito-core"              % "3.6.0",
-    "com.github.tomakehurst" % "wiremock"                  % "2.27.2",
-    "org.mockito"            %% "mockito-scala-scalatest"  % "1.16.42",
+    // "org.mockito"            % "mockito-core"              % "3.6.0",
+    "com.github.tomakehurst" %  "wiremock-jre8-standalone" % "2.33.2",
+    "org.mockito"            %% "mockito-scala-scalatest"  % "1.17.4",
     "uk.gov.hmrc"            %% "bootstrap-test-play-28"   % bootstrapPlayVersion
   ).map(_ % testScopes)
 }
