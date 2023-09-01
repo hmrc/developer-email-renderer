@@ -24,6 +24,7 @@ import play.api.libs.json.Json
 import uk.gov.hmrc.crypto.{ApplicationCrypto, PlainText}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import uk.gov.hmrc.developeremailrenderer.model.Language
 @Singleton
@@ -36,7 +37,7 @@ class PreferencesConnector @Inject() (servicesConfig: ServicesConfig, http: Http
   def languageByEmail(emailAddress: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Language] = {
     val encryptedEmail = new String(crypto.QueryParameterCrypto.encrypt(PlainText(emailAddress)).toBase64)
     val url            = servicesConfig.baseUrl("preferences") + s"/preferences/language/$encryptedEmail"
-    http.GET[Language](url)
+    http.GET[Language](url, Seq.empty, Seq.empty)
   }
 }
 

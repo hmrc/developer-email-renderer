@@ -2,7 +2,7 @@ import sbt._
 
 object AppDependencies {
 
-  lazy val bootstrapPlayVersion = "7.12.0"
+  lazy val bootstrapPlayVersion = "7.21.0"
   lazy val logbackVersion = "1.1.10"
   lazy val jsoupVersion = "1.12.1"
   lazy val scalaCheckVersion = "1.14.0"
@@ -25,8 +25,9 @@ object AppDependencies {
       "com.fasterxml.jackson.dataformat"     % "jackson-dataformat-yaml"     % jacksonVersion
     )
   lazy val testScopes = Seq(Test.name, IntegrationTest.name).mkString(",")
+  
   lazy val testDependencies: Seq[ModuleID] = Seq(
-    "uk.gov.hmrc"            %% "service-integration-test" % "1.3.0-play-28",
+    "uk.gov.hmrc"            %% "service-integration-test" % "1.4.0-play-28",
     "org.mockito"            % "mockito-core"              % "3.6.0",
     "com.github.tomakehurst" % "wiremock"                  % "2.27.2",
     "org.mockito"            %% "mockito-scala-scalatest"  % "1.16.42",
