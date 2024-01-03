@@ -58,6 +58,15 @@ lazy val microservice = Project(appName, file("."))
     )
   )
   .disablePlugins(JUnitXmlReportPlugin)
+  .settings(
+    scalacOptions ++= Seq(
+      "-Wconf:cat=unused&src=views/.*\\.scala:s",
+      "-Wconf:cat=unused&src=templates/.*\\.scala:s",
+      "-Wconf:cat=unused&src=.*RoutesPrefix\\.scala:s",
+      "-Wconf:cat=unused&src=.*Routes\\.scala:s",
+      "-Wconf:cat=unused&src=.*ReverseRoutes\\.scala:s"
+    )
+  )
 
 coverageFailOnMinimum := true
 coverageExcludedPackages := Seq(

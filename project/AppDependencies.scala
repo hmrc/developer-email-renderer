@@ -27,7 +27,6 @@ object AppDependencies {
   lazy val testScopes = Seq(Test.name, IntegrationTest.name).mkString(",")
 
   lazy val testDependencies: Seq[ModuleID] = Seq(
-    "uk.gov.hmrc"            %% "service-integration-test" % "1.4.0-play-28",
     "com.github.tomakehurst" %  "wiremock-jre8-standalone" % "2.33.2",
     "org.mockito"            %% "mockito-scala-scalatest"  % "1.17.29",
     "org.scalatest"          %% "scalatest"                % "3.2.17",
