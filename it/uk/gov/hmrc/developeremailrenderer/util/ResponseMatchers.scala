@@ -16,12 +16,13 @@
 
 package uk.gov.hmrc.play.http.test
 
+import scala.concurrent.Future
+
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.{HavePropertyMatchResult, HavePropertyMatcher}
+
 import play.api.libs.json._
 import play.api.libs.ws.WSResponse
-
-import scala.concurrent.Future
 
 trait ResponseMatchers extends ScalaFutures with IntegrationPatience {
 

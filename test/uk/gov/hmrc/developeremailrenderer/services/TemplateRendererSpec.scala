@@ -51,6 +51,7 @@ import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
 import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.model.Language
+import uk.gov.hmrc.developeremailrenderer.services.templates._
 import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 
