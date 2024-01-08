@@ -16,13 +16,14 @@
 
 package uk.gov.hmrc.developeremailrenderer
 
-import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.prop.TableDrivenPropertyChecks
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatest.OptionValues
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.prop.TableDrivenPropertyChecks
+import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import org.scalatestplus.play.{ServerProvider, WsScalaTestClient}
+
 import uk.gov.hmrc.play.http.test.ResponseMatchers
 
 class TemplatePrioritiesISpec

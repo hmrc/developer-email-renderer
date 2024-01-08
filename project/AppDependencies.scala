@@ -17,7 +17,7 @@ object AppDependencies {
       "net.codingwell"                       %% "scala-guice"                % "4.2.6",
       "com.beachape"                         %% "enumeratum"                 % "1.6.1",
       "org.jsoup"                            % "jsoup"                       % "1.13.1",
-      "org.commonmark"                       % "commonmark-ext-gfm-tables"  % "0.19.0",
+      "org.commonmark"                       % "commonmark-ext-gfm-tables"   % "0.19.0",
       "com.fasterxml.jackson.module"         %% "jackson-module-scala"       % jacksonVersion,
       "com.fasterxml.jackson.core"           % "jackson-annotations"         % jacksonVersion,
       "com.fasterxml.jackson.core"           % "jackson-databind"            % jacksonVersion,
@@ -27,10 +27,10 @@ object AppDependencies {
   lazy val testScopes = Seq(Test.name, IntegrationTest.name).mkString(",")
 
   lazy val testDependencies: Seq[ModuleID] = Seq(
-    "uk.gov.hmrc"            %% "service-integration-test" % "1.4.0-play-28",
-    // "org.mockito"            % "mockito-core"              % "3.6.0",
     "com.github.tomakehurst" %  "wiremock-jre8-standalone" % "2.33.2",
-    "org.mockito"            %% "mockito-scala-scalatest"  % "1.17.4",
+    "org.mockito"            %% "mockito-scala-scalatest"  % "1.17.29",
+    "org.scalatest"          %% "scalatest"                % "3.2.17",
+    "com.vladsch.flexmark"   %  "flexmark-all"             % "0.62.2",
     "uk.gov.hmrc"            %% "bootstrap-test-play-28"   % bootstrapPlayVersion
   ).map(_ % testScopes)
 }

@@ -29,12 +29,12 @@ object Markdown {
 
   val extensions = util.Arrays.asList(TablesExtension.create());
 
-  val parser     = Parser
+  val parser = Parser
     .builder()
     .extensions(extensions)
     .build();
 
-  val renderer   = HtmlRenderer
+  val renderer = HtmlRenderer
     .builder()
     .extensions(extensions)
     .build();

@@ -82,7 +82,7 @@ object Subject {
   def fromPlainString(text: String): Subject = Subject(_ => text)
 }
 
-object Body    {
+object Body {
   type Plain = Map[String, Any] => TxtFormat.Appendable
   type Html  = Map[String, Any] => HtmlFormat.Appendable
 }
