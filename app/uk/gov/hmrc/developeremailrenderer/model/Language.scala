@@ -16,23 +16,36 @@
 
 package uk.gov.hmrc.developeremailrenderer.model
 
-import enumeratum.{Enum, EnumEntry}
+import scala.collection.immutable.ListSet
 
 import play.api.libs.json._
 
-sealed abstract class Language(override val entryName: String) extends EnumEntry
+sealed trait Language {
 
-case object Language extends Enum[Language] {
+  lazy val displayText: String = {
+    this.toString().toLowerCase().capitalize
+  }
+}
 
-  val values = findValues
+case object Language {
 
-  case object English extends Language("en")
+  case object ENGLISH extends Language
+
+  val values: ListSet[Language] = ListSet[Language](ENGLISH)
+
+  def apply(text: String): Option[Language] = Language.values.find(_.toString() == text.toUpperCase)
+
+  def entryName(lang: Language): String = {
+    lang match {
+      case Language.ENGLISH => "en"
+    }
+  }
 
   implicit val languageReads: Reads[Language] = Reads[Language] { case _ =>
-    JsSuccess(Language.English)
+    JsSuccess(Language.ENGLISH)
   }
 
   implicit val languageWrites: Writes[Language] = new Writes[Language] {
-    override def writes(e: Language): JsValue = JsString(e.entryName)
+    override def writes(e: Language): JsValue = JsString(Language.entryName(e))
   }
 }

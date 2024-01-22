@@ -83,7 +83,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
         .thenReturn(Future.successful(AuditResult.Success))
       when(locatorMock.findTemplate(templateId)).thenReturn(Some(validTemplate))
       when(preferencesConnector.languageByEmail(anyString())(any[HeaderCarrier], any()))
-        .thenReturn(Future.successful(Language.English))
+        .thenReturn(Future.successful(Language.ENGLISH))
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
@@ -112,7 +112,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       when(auditConnector.sendEvent(any[DataEvent])(any[HeaderCarrier], any[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
       when(preferencesConnector.languageByEmail(anyString())(any[HeaderCarrier], any()))
-        .thenReturn(Future.successful(Language.English))
+        .thenReturn(Future.successful(Language.ENGLISH))
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
@@ -144,7 +144,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       when(auditConnector.sendEvent(any[DataEvent])(any[HeaderCarrier], any[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
       when(preferencesConnector.languageByEmail(anyString())(any[HeaderCarrier], any()))
-        .thenReturn(Future.successful(Language.English))
+        .thenReturn(Future.successful(Language.ENGLISH))
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {

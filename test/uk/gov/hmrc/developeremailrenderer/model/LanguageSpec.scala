@@ -21,18 +21,18 @@ import org.scalatest.wordspec.AnyWordSpec
 
 import play.api.libs.json._
 
-import uk.gov.hmrc.developeremailrenderer.model.Language.English
+import uk.gov.hmrc.developeremailrenderer.model.Language.ENGLISH
 
 class LanguageSpec extends AnyWordSpec with Matchers {
   "Language" should {
     "write to Json" in {
-      Json.toJson[Language](English) shouldBe JsString("en")
+      Json.toJson[Language](ENGLISH) shouldBe JsString("en")
     }
     "read from Json" in {
-      JsString("en").as[Language] shouldBe English
-      JsString("jpn").as[Language] shouldBe English
-      JsString("En").as[Language] shouldBe English
-      Json.obj("reason" -> "reason", "status" -> "Rendering of template failed").as[Language] shouldBe English
+      JsString("en").as[Language] shouldBe ENGLISH
+      JsString("jpn").as[Language] shouldBe ENGLISH
+      JsString("En").as[Language] shouldBe ENGLISH
+      Json.obj("reason" -> "reason", "status" -> "Rendering of template failed").as[Language] shouldBe ENGLISH
     }
   }
 }
