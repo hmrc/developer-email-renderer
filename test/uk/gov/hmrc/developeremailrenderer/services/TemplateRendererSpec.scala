@@ -255,7 +255,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       subject = "a subject",
       plainTemplate = txt.templateSample.f,
       htmlTemplate = html.templateSample.f,
-      Some(MessagePriority.Urgent)
+      Some(MessagePriority.URGENT)
     )
 
     val validRenderedResult                   = RenderResult(
@@ -264,7 +264,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       subject = "a subject",
       plain = "Test template with parameter value: VALUE using common parameters: commonValue",
       html = "<p>Test template with parameter value: VALUE using common parameters: commonValue</p>",
-      priority = Some(MessagePriority.Urgent)
+      priority = Some(MessagePriority.URGENT)
     )
     implicit val headerCarrier: HeaderCarrier = new HeaderCarrier()
 

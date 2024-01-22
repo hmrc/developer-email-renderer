@@ -35,7 +35,7 @@ object GatekeeperTemplates {
       subject = _.apply("subject"),
       plainTemplate = txt.gatekeeper.f,
       htmlTemplate = html.gatekeeper.f,
-      priority = Some(MessagePriority.Standard)
+      priority = Some(MessagePriority.STANDARD)
     )
   )
 }

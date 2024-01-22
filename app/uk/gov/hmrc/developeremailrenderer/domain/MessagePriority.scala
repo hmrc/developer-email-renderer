@@ -16,9 +16,16 @@
 
 package uk.gov.hmrc.developeremailrenderer.domain
 
-object MessagePriority extends Enumeration {
-  type MessagePriority = Value
-  val Urgent     = Value("urgent")
-  val Standard   = Value("standard")
-  val Background = Value("background")
+import scala.collection.immutable.ListSet
+
+sealed trait MessagePriority
+
+object MessagePriority {
+  case object URGENT     extends MessagePriority
+  case object STANDARD   extends MessagePriority
+  case object BACKGROUND extends MessagePriority
+
+  val values: ListSet[MessagePriority] = ListSet[MessagePriority](URGENT, STANDARD, BACKGROUND)
+
+  def apply(text: String): Option[MessagePriority] = MessagePriority.values.find(_.toString() == text.toUpperCase)
 }

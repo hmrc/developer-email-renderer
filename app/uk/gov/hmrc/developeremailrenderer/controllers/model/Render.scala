@@ -21,7 +21,7 @@ import java.util.Base64
 
 import play.api.libs.json._
 
-import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority.MessagePriority
+import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority
 
 case class RenderRequest(parameters: Map[String, String], email: Option[String])
 
