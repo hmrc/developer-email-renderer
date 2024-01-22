@@ -42,7 +42,7 @@ object RenderResult {
       "subject"     -> toRender.subject,
       "service"     -> toRender.service
     ) ++ toRender.priority.fold(Json.obj()) { priority =>
-      Json.obj("priority" -> priority.toString)
+      Json.obj("priority" -> priority.displayText)
     }
   }
 }

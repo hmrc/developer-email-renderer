@@ -18,7 +18,12 @@ package uk.gov.hmrc.developeremailrenderer.domain
 
 import scala.collection.immutable.ListSet
 
-sealed trait MessagePriority
+sealed trait MessagePriority {
+
+  lazy val displayText: String = {
+    this.toString().toLowerCase()
+  }
+}
 
 object MessagePriority {
   case object URGENT     extends MessagePriority
