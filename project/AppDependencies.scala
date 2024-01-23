@@ -15,7 +15,6 @@ object AppDependencies {
     Seq(
       "uk.gov.hmrc"                          %% "bootstrap-frontend-play-28" % bootstrapPlayVersion,
       "net.codingwell"                       %% "scala-guice"                % "4.2.6",
-      "com.beachape"                         %% "enumeratum"                 % "1.6.1",
       "org.jsoup"                            % "jsoup"                       % "1.13.1",
       "org.commonmark"                       % "commonmark-ext-gfm-tables"   % "0.19.0",
       "com.fasterxml.jackson.module"         %% "jackson-module-scala"       % jacksonVersion,

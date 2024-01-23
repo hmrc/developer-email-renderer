@@ -19,7 +19,7 @@ package uk.gov.hmrc.developeremailrenderer.domain
 import play.api.libs.json.{Json, Writes}
 import play.twirl.api.{HtmlFormat, TxtFormat}
 
-import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority.MessagePriority
+import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority
 import uk.gov.hmrc.developeremailrenderer.templates.{FromAddress, ServiceIdentifier}
 
 case class MessageTemplate(

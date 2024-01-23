@@ -33,7 +33,6 @@ import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
 import uk.gov.hmrc.developeremailrenderer.domain.{ErrorMessage, MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.model.Language
-import uk.gov.hmrc.developeremailrenderer.model.Language.English
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 
 class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: AuditConnector, preferencesConnector: PreferencesConnector) extends ApplicationLogger {
@@ -80,7 +79,7 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
         "email"              -> email,
         "originalTemplateId" -> originalTemplateId,
         "selectedTemplateId" -> selectedTemplateId,
-        "language"           -> language.toString,
+        "language"           -> language.displayText,
         "description"        -> description
       )
     )
@@ -106,7 +105,7 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
     } yield {
       preferencesConnector.languageByEmail(email).map { lang =>
         val selectedTemplateId = lang match {
-          case English => originalTemplateId
+          case Language.ENGLISH => originalTemplateId
         }
         sendLanguageEvents(email, lang, originalTemplateId, selectedTemplateId, "Language preference found")
         selectedTemplateId
@@ -120,7 +119,7 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
       case None             =>
         sendLanguageEvents(
           emailAddress.getOrElse("N/A"),
-          Language.English,
+          Language.ENGLISH,
           originalTemplateId,
           originalTemplateId,
           "Defaulting to English"

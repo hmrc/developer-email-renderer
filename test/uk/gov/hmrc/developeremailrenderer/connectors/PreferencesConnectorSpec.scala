@@ -38,8 +38,8 @@ class PreferencesConnectorSpec extends AnyWordSpecLike with Matchers with Option
   "PreferencesConnector language by email" should {
     "return English if preference returns English" in new TestCase {
       when(httpClient.GET[Language](eqTo(url), any(), any())(any(), any(), any()))
-        .thenReturn(Future.successful(Language.English))
-      preferencesConnector.languageByEmail(email).futureValue shouldBe (Language.English)
+        .thenReturn(Future.successful(Language.ENGLISH))
+      preferencesConnector.languageByEmail(email).futureValue shouldBe (Language.ENGLISH)
     }
   }
 

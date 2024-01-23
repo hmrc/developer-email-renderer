@@ -21,7 +21,7 @@ import java.util.Base64
 
 import play.api.libs.json._
 
-import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority.MessagePriority
+import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority
 
 case class RenderRequest(parameters: Map[String, String], email: Option[String])
 
@@ -42,7 +42,7 @@ object RenderResult {
       "subject"     -> toRender.subject,
       "service"     -> toRender.service
     ) ++ toRender.priority.fold(Json.obj()) { priority =>
-      Json.obj("priority" -> priority.toString)
+      Json.obj("priority" -> priority.displayText)
     }
   }
 }
