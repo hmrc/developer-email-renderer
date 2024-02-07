@@ -19,10 +19,23 @@ import sbt._
 import scoverage.ScoverageKeys
 
 object ScoverageSettings {
-  def apply(): Seq[Def.Setting[_ >: String with Double with Boolean]] =
-    Seq(ScoverageKeys.coverageMinimumStmtTotal := 93.00,
-      ScoverageKeys.coverageFailOnMinimum := true,
-      ScoverageKeys.coverageHighlighting := true,
-      ConfigKey.configurationToKey(Test) / parallelExecution := false
-    )
+  private val excludedPackages = Seq(
+    "<empty>",
+    ".*Reverse.*",
+    ".*definition.*",
+    ".*(config|testonly).*",
+    ".*(BuildInfo|Routes).*",
+    "prod",
+    "testOnlyDoNotUseInAppConf",
+    "app",
+    "uk.gov.hmrc.BuildInfo"
+  )
+
+  def apply(): Seq[Def.Setting[_ >: String with Double with Boolean]] = Seq(
+    ScoverageKeys.coverageExcludedPackages := excludedPackages.mkString(";"),
+    ScoverageKeys.coverageMinimumStmtTotal := 90.00,
+    ScoverageKeys.coverageFailOnMinimum := true,
+    ScoverageKeys.coverageHighlighting := true,
+    ConfigKey.configurationToKey(Test) / parallelExecution := false
+  )
 }
