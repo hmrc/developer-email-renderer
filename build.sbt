@@ -1,13 +1,9 @@
-import _root_.play.core.PlayVersion
-import com.typesafe.sbt.web.Import._
 import play.routes.compiler.InjectedRoutesGenerator
 import play.sbt.routes.RoutesKeys.routesGenerator
 import sbt.Keys.{ baseDirectory, unmanagedSourceDirectories, _ }
 import sbt._
 import uk.gov.hmrc.DefaultBuildSettings._
 import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
-import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin._
-import bloop.integrations.sbt.BloopDefaults
 
 lazy val appName = "developer-email-renderer"
 
@@ -19,6 +15,7 @@ ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
+  .disablePlugins(JUnitXmlReportPlugin)
   .settings(scalaSettings: _*)
   .settings(
     name := appName,
@@ -36,6 +33,7 @@ lazy val microservice = Project(appName, file("."))
       Tests.Argument("-oD")
     ),
   )
+  .settings(ScoverageSettings())
   .configs(IntegrationTest)
   .settings(integrationTestSettings(): _*)
   .settings(scalafixConfigSettings(IntegrationTest))
@@ -57,7 +55,6 @@ lazy val microservice = Project(appName, file("."))
       Resolver.typesafeRepo("releases")
     )
   )
-  .disablePlugins(JUnitXmlReportPlugin)
   .settings(
     scalacOptions ++= Seq(
       "-Wconf:cat=unused&src=views/.*\\.scala:s",
@@ -67,20 +64,6 @@ lazy val microservice = Project(appName, file("."))
       "-Wconf:cat=unused&src=.*ReverseRoutes\\.scala:s"
     )
   )
-
-coverageFailOnMinimum := true
-coverageExcludedPackages := Seq(
-  "<empty>",
-  "com.kenshoo.play.metrics",
-  ".*Reverse.*",
-  ".*definition.*",
-  ".*(config|testonly).*",
-  ".*(BuildInfo|Routes).*",
-  "prod",
-  "testOnlyDoNotUseInAppConf",
-  "app",
-  "uk.gov.hmrc.BuildInfo"
-).mkString(";")
 
 commands ++= Seq(
   Command.command("run-all-tests") { state => "test" :: "it:test" :: state },
