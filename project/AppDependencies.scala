@@ -12,10 +12,9 @@ object AppDependencies {
       "org.commonmark"                       % "commonmark-ext-gfm-tables"   % "0.21.0"
     )
 
-  lazy val testScopes = Seq(Test.name, IntegrationTest.name).mkString(",")
 
   lazy val testDependencies: Seq[ModuleID] = Seq(
     "uk.gov.hmrc"            %% "bootstrap-test-play-30"   % bootstrapPlayVersion,
     "org.mockito"            %% "mockito-scala-scalatest"  % "1.17.29"
-  ).map(_ % testScopes)
+  ).map(_ % "test")
 }
