@@ -22,7 +22,6 @@ lazy val microservice = Project(appName, file("."))
     name := appName,
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,
-    routesGenerator := InjectedRoutesGenerator,
     shellPrompt := (_ => "> "),
     Test / parallelExecution := false,
     Test / testOptions := Seq(Tests.Argument(TestFrameworks.ScalaTest, "-eT")),
