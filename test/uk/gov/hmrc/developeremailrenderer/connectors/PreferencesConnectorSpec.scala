@@ -28,29 +28,33 @@ import org.scalatest.wordspec.AnyWordSpecLike
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 import uk.gov.hmrc.crypto.{ApplicationCrypto, PlainText}
-import uk.gov.hmrc.http.{HeaderCarrier, HttpClient}
+import uk.gov.hmrc.http.client.{HttpClientV2, RequestBuilder}
+import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
 import uk.gov.hmrc.developeremailrenderer.model.Language
 
 class PreferencesConnectorSpec extends AnyWordSpecLike with Matchers with OptionValues with MockitoSugar with GuiceOneAppPerSuite with ScalaFutures {
 
-  "PreferencesConnector language by email" should {
-    "return English if preference returns English" in new TestCase {
-      when(httpClient.GET[Language](eqTo(url), any(), any())(any(), any(), any()))
-        .thenReturn(Future.successful(Language.ENGLISH))
-      preferencesConnector.languageByEmail(email).futureValue shouldBe (Language.ENGLISH)
-    }
-  }
-
   trait TestCase {
     implicit val headerCarrier: HeaderCarrier = new HeaderCarrier()
     val servicesConfig                        = mock[ServicesConfig]
-    val httpClient                            = mock[HttpClient]
+    val httpClient                            = mock[HttpClientV2]
+    val requestBuilderMock                    = mock[RequestBuilder]
+    when(servicesConfig.baseUrl("preferences")).thenReturn("http://localhost")
     val crypto                                = app.injector.instanceOf[ApplicationCrypto]
     val preferencesConnector                  = new PreferencesConnector(servicesConfig, httpClient, crypto)
     val email                                 = "test@tetst.com"
     val encryptedEmail                        = new String(crypto.QueryParameterCrypto.encrypt(PlainText(email)).toBase64)
     val url                                   = servicesConfig.baseUrl("preferences") + s"/preferences/language/$encryptedEmail"
   }
+
+  "PreferencesConnector language by email" should {
+    "return English if preference returns English" in new TestCase {
+      when(httpClient.get(eqTo(url"$url"))(any())).thenReturn(requestBuilderMock)
+      when(requestBuilderMock.execute[Language](any(), any())).thenReturn(Future.successful(Language.ENGLISH))
+      preferencesConnector.languageByEmail(email).futureValue shouldBe (Language.ENGLISH)
+    }
+  }
+
 }
