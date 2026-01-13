@@ -8,7 +8,7 @@ import uk.gov.hmrc.sbtdistributables.SbtDistributablesPlugin
 
 lazy val appName = "developer-email-renderer"
 
-ThisBuild / scalaVersion := "2.13.12"
+ThisBuild / scalaVersion := "2.13.16"
 ThisBuild / majorVersion := 0
 ThisBuild / libraryDependencySchemes += "org.scala-lang.modules" %% "scala-xml" % VersionScheme.Always
 ThisBuild / semanticdbEnabled := true
