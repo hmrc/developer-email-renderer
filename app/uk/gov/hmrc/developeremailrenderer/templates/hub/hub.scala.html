@@ -1,4 +1,4 @@
-/*
+@*
  * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,15 +12,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+ *@
 
-package uk.gov.hmrc.developeremailrenderer.templates
+@import uk.gov.hmrc.developeremailrenderer.templates.helpers.Markdown
+@(params: Map[String, Any])
+@uk.gov.hmrc.developeremailrenderer.templates.helpers.html.template_main(params, params("subject").toString(), params("showFooter").toString(), None, params("showHmrcBanner").toString()) {
 
-sealed trait ServiceIdentifier extends Product with Serializable {
-  def name: String
-}
 
-object ServiceIdentifier {
-  case object GateKeeper extends ServiceIdentifier { override val name = "gatekeeper" }
-  case object Hub extends ServiceIdentifier { override val name = "hub" }
+@Markdown("<br>Hello,\n<br>" + params("body").toString() + "<br>")
+
 }
