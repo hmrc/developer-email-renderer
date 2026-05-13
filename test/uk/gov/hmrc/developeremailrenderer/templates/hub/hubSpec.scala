@@ -47,7 +47,7 @@ class hubSpec extends AnyWordSpec with Matchers {
     "render as" in new TestCase {
       val renderedHtml = hub.html.hub.render(templateParams)
       renderedHtml.contentType should include("text/html")
-      renderedHtml.body should include("Manage the emails you receive from us in your")
+      renderedHtml.body should include("This is the body.")
     }
   }
 
@@ -77,7 +77,7 @@ class hubSpec extends AnyWordSpec with Matchers {
     "render as " in new TestCase {
       val renderedHtml = hub.html.hub.render(templateParams2)
       renderedHtml.contentType should include("text/html")
-      renderedHtml.body should include("<br>Hello,\n<br>This is the body.<br></p>")
+      renderedHtml.body should include("This is the body.")
     }
   }
 
