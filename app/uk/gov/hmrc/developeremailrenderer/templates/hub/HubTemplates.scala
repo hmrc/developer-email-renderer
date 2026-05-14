@@ -25,7 +25,7 @@ import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.Hub
 object HubTemplates {
 
   private def extractFromAddress(params: Map[String, String]): String =
-    FromAddress.noReply("Software Developer Support Team")
+    FromAddress.noReply("Do not reply")
 
   val templates = Seq(
     MessageTemplate.createWithDynamicSubjectAndFromAddress(
