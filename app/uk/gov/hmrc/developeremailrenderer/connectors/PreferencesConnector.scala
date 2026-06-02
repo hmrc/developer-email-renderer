@@ -21,11 +21,12 @@ import scala.concurrent.{ExecutionContext, Future}
 import com.google.inject.{Inject, Singleton}
 
 import play.api.libs.json.{Json, OFormat}
-import uk.gov.hmrc.crypto.{ApplicationCrypto, PlainText}
+import uk.gov.hmrc.crypto.PlainText
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.client.HttpClientV2
 import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.ApplicationCrypto
 
 import uk.gov.hmrc.developeremailrenderer.model.Language
 

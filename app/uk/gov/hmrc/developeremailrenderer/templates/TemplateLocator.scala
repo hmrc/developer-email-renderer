@@ -25,7 +25,7 @@ trait TemplateLocator {
   def templateGroups: Map[String, Seq[MessageTemplate]] =
     Map(
       "gatekeeper" -> GatekeeperTemplates.templates,
-      "hub" -> HubTemplates.templates,
+      "hub"        -> HubTemplates.templates
     )
 
   lazy val all: Seq[MessageTemplate] = templateGroups.values.flatten.toSeq
