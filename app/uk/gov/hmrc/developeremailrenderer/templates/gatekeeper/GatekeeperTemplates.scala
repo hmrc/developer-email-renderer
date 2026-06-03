@@ -24,13 +24,10 @@ import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
   */
 object GatekeeperTemplates {
 
-  private def extractFromAddress(params: Map[String, String]): String =
-    FromAddress.noReply("Software Developer Support Team")
-
   val templates = Seq(
     MessageTemplate.createWithDynamicSubjectAndFromAddress(
       templateId = "gatekeeper",
-      fromAddress = extractFromAddress,
+      fromAddress = (_) => FromAddress.noReply("Software Developer Support Team"),
       service = GateKeeper,
       subject = _.apply("subject"),
       plainTemplate = txt.gatekeeper.f,

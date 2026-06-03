@@ -22,7 +22,7 @@ import org.scalatest.OptionValues
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority
 

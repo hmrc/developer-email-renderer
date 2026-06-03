@@ -21,7 +21,7 @@ import scala.concurrent.Future
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.matchers.{HavePropertyMatchResult, HavePropertyMatcher}
 
-import play.api.libs.json._
+import play.api.libs.json.*
 import play.api.libs.ws.WSResponse
 
 trait ResponseMatchers extends ScalaFutures with IntegrationPatience {
@@ -71,12 +71,12 @@ trait ResponseMatchers extends ScalaFutures with IntegrationPatience {
     new HavePropertyMatcher[Future[WSResponse], String] {
 
       def apply(response: Future[WSResponse]) = HavePropertyMatchResult(
-        matches = response.futureValue.json.validate(path.read[E]).map(_ == expected).getOrElse(false),
+        matches = response.futureValue.json.validate(using path.read[E]).map(_ == expected).getOrElse(false),
         propertyName = "Response JSON at path " + path,
         expectedValue = expected.toString,
         actualValue = {
           val json = response.futureValue.json
-          json.validate(path.read[E]).map(_.toString).getOrElse(json.toString)
+          json.validate(using path.read[E]).map(_.toString).getOrElse(json.toString)
         }
       )
     }
@@ -86,10 +86,10 @@ trait ResponseMatchers extends ScalaFutures with IntegrationPatience {
   def jsonProperty(path: JsPath) = new HavePropertyMatcher[Future[WSResponse], JsValue] {
 
     def apply(response: Future[WSResponse]) = HavePropertyMatchResult(
-      matches = response.futureValue.json.validate(path.readNullable[JsValue]).get.isDefined,
+      matches = response.futureValue.json.validate(using path.readNullable[JsValue]).get.isDefined,
       propertyName = "Response JSON at path " + path,
       expectedValue = JsString("defined"),
-      actualValue = response.futureValue.json.validate(path.readNullable[JsValue]).get.getOrElse(JsNull)
+      actualValue = response.futureValue.json.validate(using path.readNullable[JsValue]).get.getOrElse(JsNull)
     )
   }
 }

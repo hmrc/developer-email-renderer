@@ -16,36 +16,21 @@
 
 package uk.gov.hmrc.developeremailrenderer.model
 
-import scala.collection.immutable.ListSet
+enum Language(val entryName: String) {
+  case English extends Language("en")
 
-import play.api.libs.json._
-
-sealed trait Language {
-
-  lazy val displayText: String = {
-    this.toString().toLowerCase().capitalize
-  }
 }
 
 case object Language {
+  def apply(text: String): Option[Language] = Language.values.find(_.toString().equalsIgnoreCase(text))
 
-  case object ENGLISH extends Language
+  import play.api.libs.json.*
 
-  val values: ListSet[Language] = ListSet[Language](ENGLISH)
-
-  def apply(text: String): Option[Language] = Language.values.find(_.toString() == text.toUpperCase)
-
-  def entryName(lang: Language): String = {
-    lang match {
-      case Language.ENGLISH => "en"
-    }
+  given Reads[Language] = Reads[Language] { case _ =>
+    JsSuccess(Language.English)
   }
 
-  implicit val languageReads: Reads[Language] = Reads[Language] { case _ =>
-    JsSuccess(Language.ENGLISH)
-  }
-
-  implicit val languageWrites: Writes[Language] = new Writes[Language] {
-    override def writes(e: Language): JsValue = JsString(Language.entryName(e))
+  given Writes[Language] = new Writes[Language] {
+    override def writes(e: Language): JsValue = JsString(e.entryName)
   }
 }

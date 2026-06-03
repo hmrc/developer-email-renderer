@@ -24,13 +24,10 @@ import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.Hub
   */
 object HubTemplates {
 
-  private def extractFromAddress(params: Map[String, String]): String =
-    FromAddress.noReply("Do not reply")
-
   val templates = Seq(
     MessageTemplate.createWithDynamicSubjectAndFromAddress(
       templateId = "hub",
-      fromAddress = extractFromAddress,
+      fromAddress = (_) => FromAddress.noReply("Do not reply"),
       service = Hub,
       subject = _.apply("subject"),
       plainTemplate = txt.hub.f,

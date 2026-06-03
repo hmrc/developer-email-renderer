@@ -36,7 +36,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.{ExecutionContext, Future}
 
 import org.mockito.ArgumentCaptor
-import org.mockito.ArgumentMatchers.{any => *, anyString}
+import org.mockito.ArgumentMatchers.{any as `*`, anyString}
 import org.mockito.Mockito.{verify, when}
 import org.scalatest.OptionValues
 import org.scalatest.concurrent.ScalaFutures
@@ -53,7 +53,7 @@ import uk.gov.hmrc.developeremailrenderer.connectors.PreferencesConnector
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderResult
 import uk.gov.hmrc.developeremailrenderer.domain.{MessagePriority, MessageTemplate, MissingTemplateId, TemplateRenderFailure}
 import uk.gov.hmrc.developeremailrenderer.model.Language
-import uk.gov.hmrc.developeremailrenderer.services.templates._
+import uk.gov.hmrc.developeremailrenderer.services.templates.*
 import uk.gov.hmrc.developeremailrenderer.templates.ServiceIdentifier.GateKeeper
 import uk.gov.hmrc.developeremailrenderer.templates.TemplateLocator
 
@@ -81,11 +81,11 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
     "return the same template if the template doesn't exist in WelshTemplatesByLangPreference object and email preference is English" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
 
-      when(auditConnector.sendEvent(*[DataEvent])(*[HeaderCarrier], *[ExecutionContext]))
+      when(auditConnector.sendEvent(*[DataEvent])(using *[HeaderCarrier], *[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
       when(locatorMock.findTemplate(templateId)).thenReturn(Some(validTemplate))
-      when(preferencesConnector.languageByEmail(anyString())(*[HeaderCarrier], *))
-        .thenReturn(Future.successful(Language.ENGLISH))
+      when(preferencesConnector.languageByEmail(anyString())(using *[HeaderCarrier], *))
+        .thenReturn(Future.successful(Language.English))
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
@@ -95,7 +95,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
         }
       templateRenderer.languageTemplateId(templateId, Some("test@test.com")).futureValue shouldBe templateId
       verify(auditConnector)
-        .sendEvent(dataEventArgumentCaptor.capture())(*[HeaderCarrier], *[ExecutionContext])
+        .sendEvent(dataEventArgumentCaptor.capture())(using *[HeaderCarrier], *[ExecutionContext])
       dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
       dataEventArgumentCaptor.getValue.detail shouldBe Map(
@@ -111,10 +111,10 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
     "return english template if template is in WelshTemplatesByLangPreference and language preferences set to english" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
 
-      when(auditConnector.sendEvent(*[DataEvent])(*[HeaderCarrier], *[ExecutionContext]))
+      when(auditConnector.sendEvent(*[DataEvent])(using *[HeaderCarrier], *[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
-      when(preferencesConnector.languageByEmail(anyString())(*[HeaderCarrier], *))
-        .thenReturn(Future.successful(Language.ENGLISH))
+      when(preferencesConnector.languageByEmail(anyString())(using *[HeaderCarrier], *))
+        .thenReturn(Future.successful(Language.English))
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
@@ -126,7 +126,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       templateRenderer.languageTemplateId(engTemplateId, Some("test@test.com")).futureValue shouldBe engTemplateId
 
       verify(auditConnector)
-        .sendEvent(dataEventArgumentCaptor.capture())(*[HeaderCarrier], *[ExecutionContext])
+        .sendEvent(dataEventArgumentCaptor.capture())(using *[HeaderCarrier], *[ExecutionContext])
 
       dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
@@ -143,10 +143,10 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
     "return same template if the template doesn't exist in WelshTemplatesByLangPreference object and language preference is Welsh" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
 
-      when(auditConnector.sendEvent(*[DataEvent])(*[HeaderCarrier], *[ExecutionContext]))
+      when(auditConnector.sendEvent(*[DataEvent])(using *[HeaderCarrier], *[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
-      when(preferencesConnector.languageByEmail(anyString())(*[HeaderCarrier], *))
-        .thenReturn(Future.successful(Language.ENGLISH))
+      when(preferencesConnector.languageByEmail(anyString())(using *[HeaderCarrier], *))
+        .thenReturn(Future.successful(Language.English))
 
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
@@ -158,7 +158,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       templateRenderer.languageTemplateId(templateId, Some("test@test.com")).futureValue shouldBe templateId
 
       verify(auditConnector)
-        .sendEvent(dataEventArgumentCaptor.capture())(*[HeaderCarrier], *[ExecutionContext])
+        .sendEvent(dataEventArgumentCaptor.capture())(using *[HeaderCarrier], *[ExecutionContext])
 
       dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
@@ -175,7 +175,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
     "return same template if the template doesn't exist in WelshTemplatesByLangPreference object and no email is provided" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
 
-      when(auditConnector.sendEvent(*[DataEvent])(*[HeaderCarrier], *[ExecutionContext]))
+      when(auditConnector.sendEvent(*[DataEvent])(using *[HeaderCarrier], *[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
 
       override val templateRenderer =
@@ -188,7 +188,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       templateRenderer.languageTemplateId(templateId, None).futureValue shouldBe templateId
 
       verify(auditConnector)
-        .sendEvent(dataEventArgumentCaptor.capture())(*[HeaderCarrier], *[ExecutionContext])
+        .sendEvent(dataEventArgumentCaptor.capture())(using *[HeaderCarrier], *[ExecutionContext])
 
       dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
@@ -205,7 +205,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
     "return same template if the template exist in WelshTemplatesByLangPreference object and no email is provided" in new TestCase {
       val dataEventArgumentCaptor = ArgumentCaptor.forClass(classOf[DataEvent])
 
-      when(auditConnector.sendEvent(*[DataEvent])(*[HeaderCarrier], *[ExecutionContext]))
+      when(auditConnector.sendEvent(*[DataEvent])(using *[HeaderCarrier], *[ExecutionContext]))
         .thenReturn(Future.successful(AuditResult.Success))
       override val templateRenderer =
         new TemplateRenderer(configuration, auditConnector, preferencesConnector) {
@@ -217,7 +217,7 @@ class TemplateRendererSpec extends AnyWordSpecLike with Matchers with OptionValu
       templateRenderer.languageTemplateId(engTemplateId, None).futureValue shouldBe engTemplateId
 
       verify(auditConnector)
-        .sendEvent(dataEventArgumentCaptor.capture())(*[HeaderCarrier], *[ExecutionContext])
+        .sendEvent(dataEventArgumentCaptor.capture())(using *[HeaderCarrier], *[ExecutionContext])
 
       dataEventArgumentCaptor.getValue.auditSource shouldBe "developer-email-renderer"
       dataEventArgumentCaptor.getValue.auditType shouldBe "TxSucceeded"
