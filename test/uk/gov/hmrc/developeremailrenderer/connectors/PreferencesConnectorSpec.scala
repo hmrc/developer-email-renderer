@@ -19,18 +19,20 @@ package uk.gov.hmrc.developeremailrenderer.connectors
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-import org.mockito.ArgumentMatchers.{any, eq => eqTo}
-import org.mockito.MockitoSugar
+import org.mockito.ArgumentMatchers.{any as `*`, eq as eqTo}
+import org.mockito.Mockito.when
 import org.scalatest.OptionValues
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
+import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-import uk.gov.hmrc.crypto.{ApplicationCrypto, PlainText}
+import uk.gov.hmrc.crypto.PlainText
 import uk.gov.hmrc.http.client.{HttpClientV2, RequestBuilder}
 import uk.gov.hmrc.http.{HeaderCarrier, StringContextOps}
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
+import uk.gov.hmrc.play.bootstrap.frontend.filters.crypto.ApplicationCrypto
 
 import uk.gov.hmrc.developeremailrenderer.model.Language
 
@@ -51,9 +53,9 @@ class PreferencesConnectorSpec extends AnyWordSpecLike with Matchers with Option
 
   "PreferencesConnector language by email" should {
     "return English if preference returns English" in new TestCase {
-      when(httpClient.get(eqTo(url"$url"))(any())).thenReturn(requestBuilderMock)
-      when(requestBuilderMock.execute[Language](any(), any())).thenReturn(Future.successful(Language.ENGLISH))
-      preferencesConnector.languageByEmail(email).futureValue shouldBe (Language.ENGLISH)
+      when(httpClient.get(eqTo(url"$url"))(using *)).thenReturn(requestBuilderMock)
+      when(requestBuilderMock.execute[Language](using *, *)).thenReturn(Future.successful(Language.English))
+      preferencesConnector.languageByEmail(email).futureValue shouldBe (Language.English)
     }
   }
 

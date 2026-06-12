@@ -79,7 +79,7 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
         "email"              -> email,
         "originalTemplateId" -> originalTemplateId,
         "selectedTemplateId" -> selectedTemplateId,
-        "language"           -> language.displayText,
+        "language"           -> language.toString,
         "description"        -> description
       )
     )
@@ -95,17 +95,17 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
 
   def languageTemplateId(originalTemplateId: String, emailAddress: Option[String])(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[String] = {
 
-    if (templatesByLangPreference.size <= 0) {
+    if templatesByLangPreference.size <= 0 then {
       logger.warn("WelshTemplatesByLangPreferences allowlist is empty")
     }
 
     val result = for {
-      email           <- emailAddress
-      welshTemplateId <- templatesByLangPreference.get(originalTemplateId)
+      email <- emailAddress
+      _     <- templatesByLangPreference.get(originalTemplateId)
     } yield {
       preferencesConnector.languageByEmail(email).map { lang =>
         val selectedTemplateId = lang match {
-          case Language.ENGLISH => originalTemplateId
+          case Language.English => originalTemplateId
         }
         sendLanguageEvents(email, lang, originalTemplateId, selectedTemplateId, "Language preference found")
         selectedTemplateId
@@ -119,7 +119,7 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
       case None             =>
         sendLanguageEvents(
           emailAddress.getOrElse("N/A"),
-          Language.ENGLISH,
+          Language.English,
           originalTemplateId,
           originalTemplateId,
           "Defaulting to English"
@@ -128,7 +128,7 @@ class TemplateRenderer @Inject() (configuration: Configuration, auditConnector: 
     }
   }
 
-  private def render(template: Map[String, Any] => _ <: BufferedContent[_], params: Map[String, String]): Either[ErrorMessage, String] =
+  private def render(template: Map[String, Any] => ? <: BufferedContent[?], params: Map[String, String]): Either[ErrorMessage, String] =
     Try(template(params)) match {
       case Success(output) => Right(output.toString)
       case Failure(error)  => Left(TemplateRenderFailure(error.getMessage))

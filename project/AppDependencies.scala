@@ -2,7 +2,7 @@ import sbt._
 
 object AppDependencies {
 
-  lazy val bootstrapPlayVersion = "10.5.0"
+  lazy val bootstrapPlayVersion = "10.7.0"
 
   def apply(): Seq[ModuleID] = dependencies ++ testDependencies
 
@@ -15,6 +15,8 @@ object AppDependencies {
 
   lazy val testDependencies: Seq[ModuleID] = Seq(
     "uk.gov.hmrc"            %% "bootstrap-test-play-30"   % bootstrapPlayVersion,
-    "org.mockito"            %% "mockito-scala-scalatest"  % "2.0.0"
+    // "org.mockito"            %% "mockito-scala-scalatest"  % "2.0.0"
+    "org.scalatestplus"      %% "mockito-5-18"                        % "3.2.19.0",
+
   ).map(_ % "test")
 }

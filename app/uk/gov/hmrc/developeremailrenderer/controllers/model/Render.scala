@@ -19,7 +19,7 @@ package uk.gov.hmrc.developeremailrenderer.controllers.model
 import java.nio.charset.StandardCharsets
 import java.util.Base64
 
-import play.api.libs.json._
+import play.api.libs.json.*
 
 import uk.gov.hmrc.developeremailrenderer.domain.MessagePriority
 

@@ -22,7 +22,7 @@ import com.google.inject.Inject
 import util.ApplicationLogger
 
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 import uk.gov.hmrc.developeremailrenderer.controllers.model.RenderRequest
