@@ -30,7 +30,7 @@ lazy val microservice = Project(appName, file("."))
   .settings(
     scalacOptions ++= Seq(
       "-Wconf:src=routes/.*:s",
-      "-Wconf:msg=unused import&src=html/.*:s"
+      "-Wconf:msg=unused import&src=(html|txt)/.*:s"
     )
   )
 
